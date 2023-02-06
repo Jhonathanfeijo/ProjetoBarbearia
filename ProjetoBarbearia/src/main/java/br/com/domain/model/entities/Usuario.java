@@ -6,12 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="usuario")
+@Data
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,5 +21,11 @@ public class Usuario {
 	private String nome;
 	private String senha;
 	private boolean isFuncionario;
+	
+	public boolean senhaCorresponde(Usuario usuario) {
+		if(this.senha.equals(usuario.senha))
+			return true;
+		return false;
+	}
 
 }
