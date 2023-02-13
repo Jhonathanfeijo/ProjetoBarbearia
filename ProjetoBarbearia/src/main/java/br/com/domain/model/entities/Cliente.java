@@ -23,9 +23,7 @@ public class Cliente {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	@OneToOne
-	@JoinColumn(name = "dados_id")
 	private DadosPessoais dadosPessoais;
 	@OneToOne
-	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 }

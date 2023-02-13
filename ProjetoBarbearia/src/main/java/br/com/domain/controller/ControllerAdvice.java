@@ -7,6 +7,7 @@ import br.com.domain.model.exceptions.ClienteNaoEncontradoException;
 import br.com.domain.model.exceptions.FuncionarioNaoEncontradoException;
 import br.com.domain.model.exceptions.ServicoNaoEncontradoException;
 import br.com.domain.model.exceptions.ServicoRealizadoNaoEncontradoException;
+import br.com.domain.model.exceptions.UsuarioNaoEncontradoException;
 
 @RestControllerAdvice
 public class ControllerAdvice {
@@ -25,6 +26,11 @@ public class ControllerAdvice {
 	}
 	@ExceptionHandler(FuncionarioNaoEncontradoException.class)
 	public String handleClienteNaoEncontradoException(FuncionarioNaoEncontradoException ex) {
+		return ex.getMessage();
+	}
+	
+	@ExceptionHandler(UsuarioNaoEncontradoException.class)
+	public String handleUsuarioNaoEncontradoException(UsuarioNaoEncontradoException ex) {
 		return ex.getMessage();
 	}
 }

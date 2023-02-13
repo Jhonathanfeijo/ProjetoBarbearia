@@ -22,10 +22,8 @@ public class Funcionario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@JoinColumn(name = "usuario_id")
 	@OneToOne
 	private Usuario usuario;
-	@JoinColumn(name = "dados_id")
 	@OneToOne
 	private DadosPessoais dadosPessoais;
 }

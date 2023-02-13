@@ -12,20 +12,19 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="usuario")
 @Data
+@Table(name="usuario")
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
+	private String login;
 	private String senha;
 	private boolean isFuncionario;
 	
-	public boolean senhaCorresponde(Usuario usuario) {
-		if(this.senha.equals(usuario.senha))
+	public boolean senhaCorresponde(String senha) {
+		if(this.senha.equals(senha))
 			return true;
 		return false;
 	}
-
 }

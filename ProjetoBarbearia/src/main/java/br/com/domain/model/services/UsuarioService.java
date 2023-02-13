@@ -12,4 +12,8 @@ public interface UsuarioService {
 	
 	public Usuario buscarUsuario (Integer id);
 	
+	public boolean atualizarSenha(Integer id, String senhaNova, String senhaAtual);
+	
+	public String atualizarLogin(Integer id, String novoLogin);
+	
 }
