@@ -24,21 +24,16 @@ public class ServicoServiceImpl implements ServicoService {
 	@Transactional
 	@Override
 	public void deletarServico(Integer id) {
-		servicoRepository.findById(id).map(servicoEncontrado -> {
-			servicoRepository.deleteById(id);
-			return servicoEncontrado;
-		}).orElseThrow(() -> new ServicoNaoEncontradoException());
+		Servico servico = buscarServicoPorId(id);
+		servicoRepository.deleteById(servico.getId());
 	}
 
 	@Transactional
 	@Override
 	public Servico atualizarServico(Servico servico, Integer id) {
-		Servico servicoAtualizado = servicoRepository.findById(id).map(servicoEncontrado -> {
-			servico.setId(id);
-			servicoRepository.save(servico);
-			return servico;
-		}).orElseThrow(() -> new ServicoNaoEncontradoException());
-		return servicoAtualizado;
+		Servico servicoEncontrado = buscarServicoPorId(id);
+		servico.setId(servicoEncontrado.getId());
+		return servicoRepository.save(servico);
 	}
 
 	@Override

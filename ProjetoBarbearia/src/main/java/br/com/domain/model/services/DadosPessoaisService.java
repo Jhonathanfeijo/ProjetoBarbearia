@@ -10,4 +10,5 @@ public interface DadosPessoaisService {
 	
 	public void excluirDadosPessoais(Integer id);
 	
+	public DadosPessoais buscarDadosPessoaisPorId(Integer id);
 }

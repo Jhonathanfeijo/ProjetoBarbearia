@@ -28,25 +28,20 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 
 	@Override
 	public ServicoRealizado salvarServicoRealizado(ServicoRealizado servicoRealizado) {
-		
 		return servicoRealizado = servicoRealizadoRepository.save(servicoRealizado);
 	}
 
 	@Override
 	public ServicoRealizado atualizarServicoRealizado(ServicoRealizado servicoRealizado, Integer id) {
-		return servicoRealizadoRepository.findById(id).map(servicoRealizadoEncontrado ->{
-			servicoRealizado.setId(id);
-			servicoRealizadoRepository.save(servicoRealizado);
-			return servicoRealizado;
-		}).orElseThrow(() -> new ServicoRealizadoNaoEncontradoException());
+		ServicoRealizado servicoRealizadoEncontrado = buscarServicoRealizadoPorId(id);
+		servicoRealizado.setId(servicoRealizadoEncontrado.getId());
+		return servicoRealizadoRepository.save(servicoRealizado);
 	}
 
 	@Override
 	public void deletarServicoRealizadoPorId(Integer id) {
-		servicoRealizadoRepository.findById(id).map(servicoRealizadoEncontrado ->{
-			servicoRealizadoRepository.deleteById(id);
-			return servicoRealizadoEncontrado;
-		}).orElseThrow(() -> new ServicoRealizadoNaoEncontradoException());
+		ServicoRealizado servicoRealizadoEncontrado = buscarServicoRealizadoPorId(id);
+		servicoRealizadoRepository.deleteById(servicoRealizadoEncontrado.getId());
 	}
 
 	@Override

@@ -36,14 +36,12 @@ public class ClienteServiceImpl implements ClienteService {
 	@Transactional
 	@Override
 	public void deletarClientePorId(Integer id) {
-		clienteRepository.findById(id).map(clienteEncontrado -> {
-			Integer idUsuario = clienteEncontrado.getUsuario().getId();
-			usuarioService.excluirUsuario(idUsuario);
-			Integer idDadosPessoais = clienteEncontrado.getDadosPessoais().getId();
-			dadosPessoaisService.excluirDadosPessoais(idDadosPessoais);
-			clienteRepository.deleteById(id);
-			return clienteEncontrado;
-		}).orElseThrow(() -> new ClienteNaoEncontradoException());
+		Cliente clienteEncontrado = buscarClientePorId(id);
+		Integer idUsuario = clienteEncontrado.getUsuario().getId();
+		usuarioService.excluirUsuario(idUsuario);
+		Integer idDadosPessoais = clienteEncontrado.getDadosPessoais().getId();
+		dadosPessoaisService.excluirDadosPessoais(idDadosPessoais);
+		clienteRepository.deleteById(id);
 	}
 
 	@Override

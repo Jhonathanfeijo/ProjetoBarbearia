@@ -24,20 +24,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Transactional
 	@Override
 	public Usuario atualizarUsuario(Usuario usuario, Integer id) {
-		return usuarioRepository.findById(id).map(usuarioEncontrado -> {
-			usuario.setId(id);
-			usuarioRepository.save(usuario);
-			return usuario;
-		}).orElseThrow(() -> new UsuarioNaoEncontradoException());
+		Usuario usuarioEncontrado = buscarUsuario(id);
+		usuario.setId(usuarioEncontrado.getId());
+		return usuarioRepository.save(usuario);
 	}
 
 	@Transactional
 	@Override
 	public void excluirUsuario(Integer id) {
-		usuarioRepository.findById(id).map(usuarioEncontrado -> {
-			usuarioRepository.deleteById(id);
-			return usuarioEncontrado;
-		}).orElseThrow(() -> new UsuarioNaoEncontradoException());
+		Usuario usuarioEncontrado = buscarUsuario(id);
+		usuarioRepository.deleteById(usuarioEncontrado.getId());
 	}
 
 	@Transactional
@@ -49,7 +45,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Transactional
 	@Override
 	public boolean atualizarSenha(Integer id, String senhaNova, String senhaAtual) {
-		Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new UsuarioNaoEncontradoException());
+		Usuario usuario = buscarUsuario(id);
 		boolean atualizou = false;
 		if (senhaCorresponde(usuario, senhaAtual)) {
 			usuario.setSenha(senhaNova);
@@ -62,7 +58,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public String atualizarLogin(Integer id, String novoLogin) {
-		Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new UsuarioNaoEncontradoException());
+		Usuario usuario = buscarUsuario(id);
 		usuario.setLogin(novoLogin);
 		usuarioRepository.save(usuario);
 		return novoLogin;

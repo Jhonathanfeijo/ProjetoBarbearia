@@ -21,17 +21,21 @@ public class DadosPessoaisServiceImpl implements DadosPessoaisService {
 
 	@Override
 	public DadosPessoais atualizarDadosPessoais(Integer id, DadosPessoais dados) {
-		return dadosPessoaisRepository.findById(id).map(dadosEncontrados ->{
-			dados.setId(id);
-			return dadosPessoaisRepository.save(dados);
-		}).orElseThrow(() -> new DadosPessoaisNaoEncontradoException());
+		DadosPessoais dadosEncontrados = buscarDadosPessoaisPorId(id);	
+		dados.setId(dadosEncontrados.getId());
+		return dadosPessoaisRepository.save(dados);
 	}
 
 	@Override
 	public void excluirDadosPessoais(Integer id) {
-		dadosPessoaisRepository.findById(id).map(dadosEncontrados ->{
-			dadosPessoaisRepository.deleteById(id);
-			return dadosEncontrados;
-		}).orElseThrow(() -> new DadosPessoaisNaoEncontradoException());
+		DadosPessoais dadosEncontrados = buscarDadosPessoaisPorId(id);
+		dadosPessoaisRepository.deleteById(dadosEncontrados.getId());
 	}
+
+	@Override
+	public DadosPessoais buscarDadosPessoaisPorId(Integer id) {
+		return  dadosPessoaisRepository.findById(id).orElseThrow(() -> new DadosPessoaisNaoEncontradoException());
+	}
+	
+	
 }
