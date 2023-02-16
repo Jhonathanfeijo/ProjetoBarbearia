@@ -37,12 +37,12 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	@Transactional
 	@Override
 	public void excluirFuncionarioPorId(Integer id) {
-			Funcionario funcionarioEncontrado = buscarFuncionarioPorId(id);
-			Integer idUsuario = funcionarioEncontrado.getUsuario().getId();
-			usuarioService.excluirUsuario(idUsuario);
-			Integer idDadosPessoais = funcionarioEncontrado.getDadosPessoais().getId();
-			dadosPessoaisService.excluirDadosPessoais(idDadosPessoais);
-			funcionarioRepository.deleteById(id);
+		Funcionario funcionarioEncontrado = buscarFuncionarioPorId(id);
+		Integer idUsuario = funcionarioEncontrado.getUsuario().getId();
+		usuarioService.excluirUsuario(idUsuario);		
+		Integer idDadosPessoais = funcionarioEncontrado.getDadosPessoais().getId();
+		dadosPessoaisService.excluirDadosPessoais(idDadosPessoais);
+		funcionarioRepository.deleteById(id);
 	}
 
 	@Override

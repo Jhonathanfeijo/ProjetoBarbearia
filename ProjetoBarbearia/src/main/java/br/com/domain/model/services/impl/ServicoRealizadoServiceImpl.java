@@ -5,30 +5,34 @@ import org.springframework.stereotype.Service;
 
 import br.com.domain.model.entities.ServicoRealizado;
 import br.com.domain.model.exceptions.ServicoRealizadoNaoEncontradoException;
-import br.com.domain.model.repositories.ClienteRepository;
-import br.com.domain.model.repositories.FuncionarioRepository;
 import br.com.domain.model.repositories.ServicoRealizadoRepository;
-import br.com.domain.model.repositories.ServicoRepository;
+import br.com.domain.model.services.ClienteService;
+import br.com.domain.model.services.FuncionarioService;
+import br.com.domain.model.services.ItemServicoRealizadoService;
 import br.com.domain.model.services.ServicoRealizadoService;
+import br.com.domain.model.services.ServicoService;
 
 @Service
 public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
-	
+
 	@Autowired
 	private ServicoRealizadoRepository servicoRealizadoRepository;
-	
+
 	@Autowired
-	private ClienteRepository clienteRepository;
-	
+	private ServicoService servicoService;
+
 	@Autowired
-	private FuncionarioRepository funcionarioRepository;
-	
+	private FuncionarioService funcionarioService;
+
 	@Autowired
-	private ServicoRepository servicoRepository;
+	private ClienteService clienteService;
+
+	@Autowired
+	private ItemServicoRealizadoService itemServicoRealizadoService;
 
 	@Override
 	public ServicoRealizado salvarServicoRealizado(ServicoRealizado servicoRealizado) {
-		return servicoRealizado = servicoRealizadoRepository.save(servicoRealizado);
+		return servicoRealizadoRepository.save(servicoRealizado);
 	}
 
 	@Override
