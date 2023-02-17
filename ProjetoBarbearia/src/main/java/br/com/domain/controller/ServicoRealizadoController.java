@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.domain.model.dto.request.ServicoRealizadoRequest;
+import br.com.domain.model.dto.response.ServicoRealizadoResponse;
 import br.com.domain.model.entities.ServicoRealizado;
 import br.com.domain.model.services.ServicoRealizadoService;
 
@@ -24,8 +26,8 @@ public class ServicoRealizadoController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ServicoRealizado salvarServicoRealizado(@RequestBody ServicoRealizado servicoRealizado) {
-		return servicoRealizadoService.salvarServicoRealizado(servicoRealizado);
+	public ServicoRealizadoResponse salvarServicoRealizado(@RequestBody ServicoRealizadoRequest servicoRealizadoRequest) {
+		return servicoRealizadoService.salvarServicoRealizado(servicoRealizadoRequest);
 	}
 
 	@PutMapping("/{id}")
