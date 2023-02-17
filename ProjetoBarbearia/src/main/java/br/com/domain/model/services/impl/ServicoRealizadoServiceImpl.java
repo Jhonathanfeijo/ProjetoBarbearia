@@ -30,6 +30,7 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 	@Transactional
 	@Override
 	public ServicoRealizadoResponse salvarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest) {
+
 		ServicoRealizado servicoRealizado = servicoRealizadoMapper.toServicoRealizado(servicoRealizadoRequest);
 		servicoRealizado = servicoRealizadoRepository.save(servicoRealizado);
 		List<ItemServicoRealizado> itensServicoRealizado = servicoRealizado.getItens();
@@ -37,11 +38,14 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 		return servicoRealizadoMapper.toServicoRealizadoResponse(servicoRealizado);
 	}
 
+	@Transactional
 	@Override
-	public ServicoRealizado atualizarServicoRealizado(ServicoRealizado servicoRealizado, Integer id) {
+	public ServicoRealizadoResponse atualizarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest,
+			Integer id) {
 		ServicoRealizado servicoRealizadoEncontrado = buscarServicoRealizadoPorId(id);
+		ServicoRealizado servicoRealizado = servicoRealizadoMapper.toServicoRealizado(servicoRealizadoRequest);
 		servicoRealizado.setId(servicoRealizadoEncontrado.getId());
-		return servicoRealizadoRepository.save(servicoRealizado);
+		return servicoRealizadoMapper.toServicoRealizadoResponse(servicoRealizado);
 	}
 
 	@Override

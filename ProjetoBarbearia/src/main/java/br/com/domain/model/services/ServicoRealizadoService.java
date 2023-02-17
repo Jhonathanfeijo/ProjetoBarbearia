@@ -8,7 +8,7 @@ public interface ServicoRealizadoService {
 
 	public ServicoRealizadoResponse salvarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest);
 
-	public ServicoRealizado atualizarServicoRealizado(ServicoRealizado servicoRealizado, Integer id);
+	public ServicoRealizadoResponse atualizarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest, Integer id);
 
 	public void deletarServicoRealizadoPorId(Integer id);
 

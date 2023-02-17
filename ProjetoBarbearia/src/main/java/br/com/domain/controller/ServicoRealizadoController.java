@@ -32,9 +32,9 @@ public class ServicoRealizadoController {
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ServicoRealizado atualizarServicoRealizado(@PathVariable("id") Integer id,
-			@RequestBody ServicoRealizado servicoRealizado) {
-		return servicoRealizadoService.atualizarServicoRealizado(servicoRealizado, id);
+	public ServicoRealizadoResponse atualizarServicoRealizado(@PathVariable("id") Integer id,
+			@RequestBody ServicoRealizadoRequest servicoRealizadoRequest) {
+		return servicoRealizadoService.atualizarServicoRealizado(servicoRealizadoRequest, id);
 	}
 
 	@DeleteMapping("/{id}")
