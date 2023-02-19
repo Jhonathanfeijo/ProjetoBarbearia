@@ -29,6 +29,15 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
 	@Transactional
 	@Override
+	public FuncionarioResponse atualizarFuncionarioPorId(Funcionario funcionario, Integer id) {
+		Funcionario funcionarioEncontrado = buscarFuncionarioPorId(id);
+		funcionario.setId(funcionarioEncontrado.getId());
+		funcionario = funcionarioRepository.save(funcionario);
+		return toFuncionarioResponse(funcionario);
+	}
+	
+	@Transactional
+	@Override
 	public void excluirFuncionarioPorId(Integer id) {
 		buscarFuncionarioPorId(id);
 		funcionarioRepository.deleteById(id);
@@ -48,13 +57,4 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	public FuncionarioResponse toFuncionarioResponse(Funcionario funcionario) {
 		return funcionarioDTO.toFuncionarioResponse(funcionario);
 	}
-
-	@Override
-	public FuncionarioResponse atualizarFuncionarioPorId(Funcionario funcionario, Integer id) {
-		Funcionario funcionarioEncontrado = buscarFuncionarioPorId(id);
-		funcionario.setId(funcionarioEncontrado.getId());
-		funcionario = funcionarioRepository.save(funcionario);
-		return toFuncionarioResponse(funcionario);
-	}
-
 }

@@ -44,8 +44,8 @@ public class ServicoRealizadoController {
 	}
 
 	@GetMapping("/{id}")
-	public ServicoRealizado buscarServico(@PathVariable("id") Integer id) {
-		return servicoRealizadoService.buscarServicoRealizadoPorId(id);
+	public ServicoRealizadoResponse buscarServico(@PathVariable("id") Integer id) {
+		return servicoRealizadoService.obterServicoRealizadoResponse(id);
 	}
 
 }

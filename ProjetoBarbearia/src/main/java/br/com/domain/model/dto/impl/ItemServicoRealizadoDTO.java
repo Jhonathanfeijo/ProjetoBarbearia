@@ -1,6 +1,5 @@
 package br.com.domain.model.dto.impl;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,19 +10,20 @@ import br.com.domain.model.dto.request.ItemServicoRealizadoRequest;
 import br.com.domain.model.dto.response.ItemServicoRealizadoResponse;
 import br.com.domain.model.entities.ItemServicoRealizado;
 import br.com.domain.model.entities.Servico;
+import br.com.domain.model.entities.ServicoRealizado;
 import br.com.domain.model.services.ServicoService;
+
 @Component
 public class ItemServicoRealizadoDTO {
 
 	@Autowired
 	private ServicoService servicoService;
 
-	public List<ItemServicoRealizado> toItemServicoRealizadoList(
-			List<ItemServicoRealizadoRequest> itemServicoRealizadoRequest) {
+	public List<ItemServicoRealizado> toItemServicoRealizadoList(List<ItemServicoRealizadoRequest> itemServicoRealizadoRequest, ServicoRealizado servicoRealizado) {
 		List<ItemServicoRealizado> itens = itemServicoRealizadoRequest.stream().map(item -> {
 			Servico servico = servicoService.buscarServicoPorId(item.getIdServico());
 			Integer quantidadeServico = item.getQuantidade();
-			return ItemServicoRealizado.builder().servico(servico).quantidade(quantidadeServico).build();
+			return ItemServicoRealizado.builder().servico(servico).quantidade(quantidadeServico).servicoRealizado(servicoRealizado).build();
 		}).collect(Collectors.toList());
 		return itens;
 	}

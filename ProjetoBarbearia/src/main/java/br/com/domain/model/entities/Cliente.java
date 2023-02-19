@@ -2,6 +2,7 @@ package br.com.domain.model.entities;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,6 +25,6 @@ public class Cliente {
 	private Integer id;
 	@OneToOne(cascade = CascadeType.ALL)
 	private DadosPessoais dadosPessoais;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Usuario usuario;
 }

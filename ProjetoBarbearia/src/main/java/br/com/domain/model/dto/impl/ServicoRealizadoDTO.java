@@ -24,18 +24,25 @@ public class ServicoRealizadoDTO {
 
 	@Autowired
 	private ClienteService clienteService;
-
+	
+	@Autowired
 	private CalcularValorServicoRealizado calcularValorServicoRealizado;
-
+	
+	@Autowired
 	private ItemServicoRealizadoDTO itemServicoRealizadoDTO;
 
 	public ServicoRealizado toServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest) {
+		ServicoRealizado servicoRealizado = new ServicoRealizado();
 		Cliente cliente = clienteService.buscarClientePorId(servicoRealizadoRequest.getIdCliente());
 		Funcionario funcionario = funcionarioService.buscarFuncionarioPorId(servicoRealizadoRequest.getIdFuncionario());
 		List<ItemServicoRealizado> itensServicoRealizado = itemServicoRealizadoDTO
-				.toItemServicoRealizadoList(servicoRealizadoRequest.getItens());
+				.toItemServicoRealizadoList(servicoRealizadoRequest.getItens(),servicoRealizado);
 		BigDecimal valorTotal = calcularValorServicoRealizado.calcularValorServicoRealizado(itensServicoRealizado);
-		return ServicoRealizado.builder().cliente(cliente).funcionario(funcionario).itens(itensServicoRealizado).valorTotal(valorTotal).build();
+		servicoRealizado.setCliente(cliente);
+		servicoRealizado.setFuncionario(funcionario);
+		servicoRealizado.setItens(itensServicoRealizado);
+		servicoRealizado.setValorTotal(valorTotal);
+		return servicoRealizado;
 	}
 
 	public ServicoRealizadoResponse toServicoRealizadoResponse (ServicoRealizado servicoRealizado) {

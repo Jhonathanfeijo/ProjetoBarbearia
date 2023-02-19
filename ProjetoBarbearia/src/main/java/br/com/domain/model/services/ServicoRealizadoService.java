@@ -13,5 +13,7 @@ public interface ServicoRealizadoService {
 	public void deletarServicoRealizadoPorId(Integer id);
 
 	public ServicoRealizado buscarServicoRealizadoPorId(Integer id);
+	
+	public ServicoRealizadoResponse obterServicoRealizadoResponse(Integer id);
 
 }

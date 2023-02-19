@@ -61,5 +61,5 @@ ALTER TABLE funcionario ADD CONSTRAINT fk_funcionario_dados_pessoais foreign key
 ALTER TABLE servico_realizado ADD CONSTRAINT fk_servico_realizado_cliente foreign key (cliente_id) references cliente(id);
 ALTER TABLE servico_realizado ADD CONSTRAINT fk_servico_realizado_funcionario foreign key (funcionario_id) references funcionario (id);
 ALTER TABLE item_servico_realizado ADD CONSTRAINT fk_item_servico_realizado_servico_realizado foreign key (servico_realizado_id) references servico_realizado(id);
-ALTER TABLE item_servico_realizado ADD CONSTRAINT fk_item_servico_realizado_servico foreign key (servico_id) references servico_realizado(id);
+ALTER TABLE item_servico_realizado ADD CONSTRAINT fk_item_servico_realizado_servico foreign key (servico_id) references servico(id);
 

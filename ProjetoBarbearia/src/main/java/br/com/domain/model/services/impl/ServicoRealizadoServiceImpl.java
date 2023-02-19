@@ -33,9 +33,9 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 	@Override
 	public ServicoRealizadoResponse atualizarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest,
 			Integer id) {
-		ServicoRealizado servicoRealizado = buscarServicoRealizadoPorId(id);
-		servicoRealizado = toServicoRealizado(servicoRealizadoRequest);
-		servicoRealizado.setId(id);
+		ServicoRealizado servicoRealizadoEncontrado = buscarServicoRealizadoPorId(id);
+		ServicoRealizado servicoRealizado = toServicoRealizado(servicoRealizadoRequest);
+		servicoRealizado.setId(servicoRealizadoEncontrado.getId());
 		return toServicoRealizadoResponse(servicoRealizado);
 	}
 
@@ -50,6 +50,12 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 		return servicoRealizadoRepository.findById(id).orElseThrow(() -> new ServicoRealizadoNaoEncontradoException());
 	}
 
+	@Override
+	public ServicoRealizadoResponse obterServicoRealizadoResponse(Integer id) {
+		ServicoRealizado servicoRealizado = buscarServicoRealizadoPorId(id);
+		return toServicoRealizadoResponse(servicoRealizado);
+	}
+
 	public ServicoRealizadoResponse toServicoRealizadoResponse(ServicoRealizado servicoRealizado) {
 		return servicoRealizadoDTO.toServicoRealizadoResponse(servicoRealizado);
 	}
@@ -57,4 +63,5 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 	public ServicoRealizado toServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest) {
 		return servicoRealizadoDTO.toServicoRealizado(servicoRealizadoRequest);
 	}
+
 }

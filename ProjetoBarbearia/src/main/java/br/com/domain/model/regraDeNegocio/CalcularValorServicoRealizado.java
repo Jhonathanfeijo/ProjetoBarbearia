@@ -3,8 +3,10 @@ package br.com.domain.model.regraDeNegocio;
 import java.math.BigDecimal;
 import java.util.List;
 
-import br.com.domain.model.entities.ItemServicoRealizado;
+import org.springframework.stereotype.Component;
 
+import br.com.domain.model.entities.ItemServicoRealizado;
+@Component
 public class CalcularValorServicoRealizado {
 
 	public BigDecimal calcularValorServicoRealizado(List<ItemServicoRealizado> itens) {

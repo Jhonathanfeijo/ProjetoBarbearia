@@ -27,6 +27,6 @@ public class ItemServicoRealizado {
 	@JoinColumn(name = "servico_id")
 	private Servico servico;
 	@ManyToOne
-	@JoinColumn(name = "servico_realizado")
+	@JoinColumn(name = "servico_realizado_id")
 	private ServicoRealizado servicoRealizado;
 }
