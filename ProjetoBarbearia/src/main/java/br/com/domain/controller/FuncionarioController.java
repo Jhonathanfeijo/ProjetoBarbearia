@@ -6,11 +6,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.domain.model.dto.response.FuncionarioResponse;
 import br.com.domain.model.entities.Funcionario;
 import br.com.domain.model.services.FuncionarioService;
 
@@ -23,8 +25,14 @@ public class FuncionarioController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Funcionario salvarFuncionario(@RequestBody Funcionario funcionario) {
+	public FuncionarioResponse salvarFuncionario(@RequestBody Funcionario funcionario) {
 		return funcionarioService.salvarFuncionario(funcionario);
+	}
+	
+	@PutMapping("/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public FuncionarioResponse atualizarFuncionario(@RequestBody Funcionario funcionario, @PathVariable("id") Integer id) {
+		return funcionarioService.atualizarFuncionarioPorId(funcionario, id);
 	}
 
 	@DeleteMapping("/{id}")
@@ -34,7 +42,7 @@ public class FuncionarioController {
 	}
 
 	@GetMapping("/{id}")
-	public Funcionario buscarFuncionario(@PathVariable("id") Integer id) {
-		return funcionarioService.buscarFuncionarioPorId(id);
+	public FuncionarioResponse buscarFuncionario(@PathVariable("id") Integer id) {
+		return funcionarioService.buscarFuncionarioResponse(id);
 	}
 }

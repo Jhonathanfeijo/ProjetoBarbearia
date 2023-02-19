@@ -1,9 +1,10 @@
-package br.com.domain.model.dto.request.impl;
+package br.com.domain.model.dto.impl;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import br.com.domain.model.dto.request.ServicoRealizadoRequest;
 import br.com.domain.model.dto.response.ItemServicoRealizadoResponse;
@@ -15,8 +16,8 @@ import br.com.domain.model.entities.ServicoRealizado;
 import br.com.domain.model.regraDeNegocio.CalcularValorServicoRealizado;
 import br.com.domain.model.services.ClienteService;
 import br.com.domain.model.services.FuncionarioService;
-
-public class ServicoRealizadoMapper {
+@Component
+public class ServicoRealizadoDTO {
 
 	@Autowired
 	private FuncionarioService funcionarioService;
@@ -26,29 +27,22 @@ public class ServicoRealizadoMapper {
 
 	private CalcularValorServicoRealizado calcularValorServicoRealizado;
 
-	private ItemServicoRealizadoMapper itemServicoRealizadoMapper;
+	private ItemServicoRealizadoDTO itemServicoRealizadoDTO;
 
 	public ServicoRealizado toServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest) {
 		Cliente cliente = clienteService.buscarClientePorId(servicoRealizadoRequest.getIdCliente());
 		Funcionario funcionario = funcionarioService.buscarFuncionarioPorId(servicoRealizadoRequest.getIdFuncionario());
-		List<ItemServicoRealizado> itensServicoRealizado = itemServicoRealizadoMapper
+		List<ItemServicoRealizado> itensServicoRealizado = itemServicoRealizadoDTO
 				.toItemServicoRealizadoList(servicoRealizadoRequest.getItens());
 		BigDecimal valorTotal = calcularValorServicoRealizado.calcularValorServicoRealizado(itensServicoRealizado);
-		ServicoRealizado servicoRealizado = new ServicoRealizado();
-		servicoRealizado.setCliente(cliente);
-		servicoRealizado.setFuncionario(funcionario);
-		servicoRealizado.setItens(itensServicoRealizado);
-		servicoRealizado.setValorTotal(valorTotal);
-		return servicoRealizado;
+		return ServicoRealizado.builder().cliente(cliente).funcionario(funcionario).itens(itensServicoRealizado).valorTotal(valorTotal).build();
 	}
 
 	public ServicoRealizadoResponse toServicoRealizadoResponse (ServicoRealizado servicoRealizado) {
-		ServicoRealizadoResponse servicoRealizadoResponse = new ServicoRealizadoResponse();
-		servicoRealizadoResponse.setNomeCliente(servicoRealizado.getCliente().getDadosPessoais().getNome());
-		servicoRealizadoResponse.setNomeFuncionario(servicoRealizado.getFuncionario().getDadosPessoais().getNome());
-		servicoRealizadoResponse.setValorTotal(servicoRealizado.getValorTotal());
-		List<ItemServicoRealizadoResponse> itensServicoRealizadoResponse = itemServicoRealizadoMapper.toItemServicoRealizadoResponseList(servicoRealizado.getItens());
-		servicoRealizadoResponse.setItens(itensServicoRealizadoResponse);
-		return servicoRealizadoResponse;
+		String nomeCliente = servicoRealizado.getCliente().getDadosPessoais().getNome();
+		String nomeFuncionario = servicoRealizado.getFuncionario().getDadosPessoais().getNome();
+		BigDecimal valorTotal = servicoRealizado.getValorTotal();
+		List<ItemServicoRealizadoResponse> itensServicoRealizadoResponse = itemServicoRealizadoDTO.toItemServicoRealizadoResponseList(servicoRealizado.getItens());
+		return ServicoRealizadoResponse.builder().nomeCliente(nomeCliente).nomeFuncionario(nomeFuncionario).valorTotal(valorTotal).itens(itensServicoRealizadoResponse).build();
 	}
 }

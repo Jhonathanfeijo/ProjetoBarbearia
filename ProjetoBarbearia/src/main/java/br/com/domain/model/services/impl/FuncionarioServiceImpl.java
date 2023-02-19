@@ -3,14 +3,12 @@ package br.com.domain.model.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.domain.model.entities.DadosPessoais;
+import br.com.domain.model.dto.impl.FuncionarioDTO;
+import br.com.domain.model.dto.response.FuncionarioResponse;
 import br.com.domain.model.entities.Funcionario;
-import br.com.domain.model.entities.Usuario;
 import br.com.domain.model.exceptions.FuncionarioNaoEncontradoException;
 import br.com.domain.model.repositories.FuncionarioRepository;
-import br.com.domain.model.services.DadosPessoaisService;
 import br.com.domain.model.services.FuncionarioService;
-import br.com.domain.model.services.UsuarioService;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -20,34 +18,43 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	private FuncionarioRepository funcionarioRepository;
 
 	@Autowired
-	private UsuarioService usuarioService;
-	
-	@Autowired
-	private DadosPessoaisService dadosPessoaisService;
+	private FuncionarioDTO funcionarioDTO;
+
 	@Transactional
 	@Override
-	public Funcionario salvarFuncionario(Funcionario funcionario) {
-		funcionario.getUsuario().setFuncionario(true);
-		Usuario usuario = usuarioService.salvarUsuario(funcionario.getUsuario());
-		DadosPessoais dadosPessoais = dadosPessoaisService.salvarDadosPessoais(funcionario.getDadosPessoais());
-		funcionario.setDadosPessoais(dadosPessoais);
-		funcionario.setUsuario(usuario);
-		return funcionarioRepository.save(funcionario);
+	public FuncionarioResponse salvarFuncionario(Funcionario funcionario) {
+		funcionario = funcionarioRepository.save(funcionario);
+		return toFuncionarioResponse(funcionario);
 	}
+
 	@Transactional
 	@Override
 	public void excluirFuncionarioPorId(Integer id) {
-		Funcionario funcionarioEncontrado = buscarFuncionarioPorId(id);
-		Integer idUsuario = funcionarioEncontrado.getUsuario().getId();
-		usuarioService.excluirUsuario(idUsuario);		
-		Integer idDadosPessoais = funcionarioEncontrado.getDadosPessoais().getId();
-		dadosPessoaisService.excluirDadosPessoais(idDadosPessoais);
+		buscarFuncionarioPorId(id);
 		funcionarioRepository.deleteById(id);
 	}
 
 	@Override
 	public Funcionario buscarFuncionarioPorId(Integer id) {
 		return funcionarioRepository.findById(id).orElseThrow(() -> new FuncionarioNaoEncontradoException());
+	}
+
+	@Override
+	public FuncionarioResponse buscarFuncionarioResponse(Integer id) {
+		Funcionario funcionario = buscarFuncionarioPorId(id);
+		return toFuncionarioResponse(funcionario);
+	}
+
+	public FuncionarioResponse toFuncionarioResponse(Funcionario funcionario) {
+		return funcionarioDTO.toFuncionarioResponse(funcionario);
+	}
+
+	@Override
+	public FuncionarioResponse atualizarFuncionarioPorId(Funcionario funcionario, Integer id) {
+		Funcionario funcionarioEncontrado = buscarFuncionarioPorId(id);
+		funcionario.setId(funcionarioEncontrado.getId());
+		funcionario = funcionarioRepository.save(funcionario);
+		return toFuncionarioResponse(funcionario);
 	}
 
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,13 +19,9 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@NotEmpty
 	private String login;
+	@NotEmpty
 	private String senha;
-	private boolean isFuncionario;
 	
-	public boolean senhaCorresponde(String senha) {
-		if(this.senha.equals(senha))
-			return true;
-		return false;
-	}
 }

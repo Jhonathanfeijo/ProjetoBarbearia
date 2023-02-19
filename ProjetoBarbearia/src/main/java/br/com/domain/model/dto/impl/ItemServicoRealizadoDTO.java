@@ -1,17 +1,19 @@
-package br.com.domain.model.dto.request.impl;
+package br.com.domain.model.dto.impl;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import br.com.domain.model.dto.request.ItemServicoRealizadoRequest;
 import br.com.domain.model.dto.response.ItemServicoRealizadoResponse;
 import br.com.domain.model.entities.ItemServicoRealizado;
 import br.com.domain.model.entities.Servico;
 import br.com.domain.model.services.ServicoService;
-
-public class ItemServicoRealizadoMapper {
+@Component
+public class ItemServicoRealizadoDTO {
 
 	@Autowired
 	private ServicoService servicoService;

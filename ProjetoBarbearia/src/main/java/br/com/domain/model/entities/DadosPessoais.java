@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,16 +19,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name="dados_pessoais")
+@Table(name = "dados_pessoais")
 public class DadosPessoais {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name="nome")
+	@NotEmpty
+	@Column(name = "nome")
 	private String nome;
-	@Column(name="cpf")
+	@Column(name = "cpf")
 	@CPF
 	private String cpf;
-	@Column(name="rg")
+	@NotEmpty
+	@Column(name = "rg")
 	private String rg;
 }

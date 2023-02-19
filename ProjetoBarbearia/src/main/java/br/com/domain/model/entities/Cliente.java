@@ -1,10 +1,10 @@
 package br.com.domain.model.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -16,14 +16,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="cliente")
+@Table(name = "cliente")
 @Builder
 public class Cliente {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private DadosPessoais dadosPessoais;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Usuario usuario;
 }

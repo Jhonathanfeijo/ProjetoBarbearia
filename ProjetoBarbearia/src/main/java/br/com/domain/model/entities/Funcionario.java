@@ -1,5 +1,6 @@
 package br.com.domain.model.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,8 +23,8 @@ public class Funcionario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Usuario usuario;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private DadosPessoais dadosPessoais;
 }

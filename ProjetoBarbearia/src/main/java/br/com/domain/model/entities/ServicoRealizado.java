@@ -3,6 +3,7 @@ package br.com.domain.model.entities;
 import java.math.BigDecimal;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,8 +34,9 @@ public class ServicoRealizado {
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
+	@NotNull
 	private BigDecimal valorTotal;
-	@OneToMany(mappedBy = "servicoRealizado")
+	@OneToMany(mappedBy = "servicoRealizado", cascade = CascadeType.ALL)
 	private List<ItemServicoRealizado> itens;
 	
 }
