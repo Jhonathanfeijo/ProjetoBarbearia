@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.domain.model.dto.request.ServicoRealizadoRequest;
 import br.com.domain.model.dto.response.ServicoRealizadoResponse;
-import br.com.domain.model.entities.ServicoRealizado;
 import br.com.domain.model.services.ServicoRealizadoService;
 
 @RestController
-@RequestMapping("/api/servicoRealizado")
+@RequestMapping("/api/servicorealizado")
 public class ServicoRealizadoController {
 
 	@Autowired

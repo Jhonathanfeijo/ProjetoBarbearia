@@ -8,6 +8,7 @@ import br.com.domain.model.dto.request.ServicoRealizadoRequest;
 import br.com.domain.model.dto.response.ServicoRealizadoResponse;
 import br.com.domain.model.entities.ServicoRealizado;
 import br.com.domain.model.exceptions.ServicoRealizadoNaoEncontradoException;
+import br.com.domain.model.repositories.ItemServicoRealizadoRepository;
 import br.com.domain.model.repositories.ServicoRealizadoRepository;
 import br.com.domain.model.services.ServicoRealizadoService;
 import jakarta.transaction.Transactional;
@@ -20,6 +21,9 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 
 	@Autowired
 	private ServicoRealizadoDTO servicoRealizadoDTO;
+	
+	@Autowired
+	private ItemServicoRealizadoRepository itemServicoRealizadoRepository;
 
 	@Transactional
 	@Override
@@ -33,9 +37,10 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 	@Override
 	public ServicoRealizadoResponse atualizarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest,
 			Integer id) {
-		ServicoRealizado servicoRealizadoEncontrado = buscarServicoRealizadoPorId(id);
+		buscarServicoRealizadoPorId(id);
 		ServicoRealizado servicoRealizado = toServicoRealizado(servicoRealizadoRequest);
-		servicoRealizado.setId(servicoRealizadoEncontrado.getId());
+		servicoRealizado.setId(id);
+		servicoRealizado = servicoRealizadoRepository.save(servicoRealizado);
 		return toServicoRealizadoResponse(servicoRealizado);
 	}
 

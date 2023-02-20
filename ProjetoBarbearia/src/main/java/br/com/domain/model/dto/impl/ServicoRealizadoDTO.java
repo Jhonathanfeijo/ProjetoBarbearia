@@ -14,6 +14,7 @@ import br.com.domain.model.entities.Funcionario;
 import br.com.domain.model.entities.ItemServicoRealizado;
 import br.com.domain.model.entities.ServicoRealizado;
 import br.com.domain.model.regraDeNegocio.CalcularValorServicoRealizado;
+import br.com.domain.model.repositories.ItemServicoRealizadoRepository;
 import br.com.domain.model.services.ClienteService;
 import br.com.domain.model.services.FuncionarioService;
 @Component

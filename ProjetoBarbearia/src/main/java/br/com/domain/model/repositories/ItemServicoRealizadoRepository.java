@@ -7,5 +7,6 @@ import br.com.domain.model.entities.ItemServicoRealizado;
 
 @Repository
 public interface ItemServicoRealizadoRepository extends JpaRepository<ItemServicoRealizado,Integer> {
+	
 
 }
