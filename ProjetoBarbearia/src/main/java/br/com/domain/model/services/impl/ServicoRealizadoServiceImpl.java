@@ -1,15 +1,19 @@
 package br.com.domain.model.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import br.com.domain.model.dto.impl.ServicoRealizadoDTO;
 import br.com.domain.model.dto.request.ServicoRealizadoRequest;
 import br.com.domain.model.dto.response.ServicoRealizadoResponse;
+import br.com.domain.model.entities.ItemServicoRealizado;
 import br.com.domain.model.entities.ServicoRealizado;
 import br.com.domain.model.exceptions.ServicoRealizadoNaoEncontradoException;
-import br.com.domain.model.repositories.ItemServicoRealizadoRepository;
 import br.com.domain.model.repositories.ServicoRealizadoRepository;
+import br.com.domain.model.services.ItemServicoRealizadoService;
 import br.com.domain.model.services.ServicoRealizadoService;
 import jakarta.transaction.Transactional;
 
@@ -21,9 +25,9 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 
 	@Autowired
 	private ServicoRealizadoDTO servicoRealizadoDTO;
-	
+
 	@Autowired
-	private ItemServicoRealizadoRepository itemServicoRealizadoRepository;
+	private ItemServicoRealizadoService itemServicoRealizadoService;
 
 	@Transactional
 	@Override
@@ -33,17 +37,22 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 		return toServicoRealizadoResponse(servicoRealizado);
 	}
 
+	@Modifying
 	@Transactional
 	@Override
 	public ServicoRealizadoResponse atualizarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest,
 			Integer id) {
 		buscarServicoRealizadoPorId(id);
 		ServicoRealizado servicoRealizado = toServicoRealizado(servicoRealizadoRequest);
+		List<ItemServicoRealizado> itensAtualizados = itemServicoRealizadoService
+				.atualizarItemServicoRealizadoList(servicoRealizado.getItens(), id);
 		servicoRealizado.setId(id);
+		servicoRealizado.setItens(itensAtualizados);
 		servicoRealizado = servicoRealizadoRepository.save(servicoRealizado);
 		return toServicoRealizadoResponse(servicoRealizado);
 	}
 
+	@Transactional
 	@Override
 	public void deletarServicoRealizadoPorId(Integer id) {
 		ServicoRealizado servicoRealizadoEncontrado = buscarServicoRealizadoPorId(id);

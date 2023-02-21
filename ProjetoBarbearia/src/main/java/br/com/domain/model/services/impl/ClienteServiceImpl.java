@@ -6,9 +6,13 @@ import org.springframework.stereotype.Service;
 import br.com.domain.model.dto.impl.ClienteDTO;
 import br.com.domain.model.dto.response.ClienteResponse;
 import br.com.domain.model.entities.Cliente;
+import br.com.domain.model.entities.DadosPessoais;
+import br.com.domain.model.entities.Usuario;
 import br.com.domain.model.exceptions.ClienteNaoEncontradoException;
 import br.com.domain.model.repositories.ClienteRepository;
 import br.com.domain.model.services.ClienteService;
+import br.com.domain.model.services.DadosPessoaisService;
+import br.com.domain.model.services.UsuarioService;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -19,6 +23,12 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Autowired
 	private ClienteDTO clienteDTO;
+
+	@Autowired
+	private DadosPessoaisService dadosPessoaisService;
+
+	@Autowired
+	private UsuarioService usuarioService;
 
 	@Transactional
 	@Override
@@ -33,13 +43,18 @@ public class ClienteServiceImpl implements ClienteService {
 		buscarClientePorId(id);
 		clienteRepository.deleteById(id);
 	}
+
 	@Transactional
 	@Override
 	public ClienteResponse atualizarCliente(Cliente cliente, Integer id) {
 		Cliente clienteEncontrado = buscarClientePorId(id);
+		DadosPessoais dadosPessoais = dadosPessoaisService.atualizarDadosPessoais(clienteEncontrado.getDadosPessoais(),
+				cliente.getDadosPessoais());
+		Usuario usuario = usuarioService.atualizarUsuario(clienteEncontrado.getUsuario(), cliente.getUsuario());
+		cliente.setDadosPessoais(dadosPessoais);
 		cliente.setId(clienteEncontrado.getId());
-		cliente = clienteRepository.save(cliente);
-		return toClienteResponse(cliente);
+		cliente.setUsuario(usuario);
+		return salvarCliente(clienteEncontrado);
 	}
 
 	@Override

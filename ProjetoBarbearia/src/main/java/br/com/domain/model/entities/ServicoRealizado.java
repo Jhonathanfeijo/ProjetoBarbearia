@@ -37,7 +37,7 @@ public class ServicoRealizado {
 	private Cliente cliente;
 	@NotNull
 	private BigDecimal valorTotal;
-	@OneToMany(mappedBy = "servicoRealizado", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "servicoRealizado", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ItemServicoRealizado> itens;
 	
 }
