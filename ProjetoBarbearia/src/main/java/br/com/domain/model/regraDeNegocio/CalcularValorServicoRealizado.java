@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import br.com.domain.model.entities.ItemServicoRealizado;
 @Component
 public class CalcularValorServicoRealizado {
-
+	//Calcular valor total do servico realizado
 	public BigDecimal calcularValorServicoRealizado(List<ItemServicoRealizado> itens) {
 		BigDecimal valorServicoRealizado = new BigDecimal("0.0");
 		for (ItemServicoRealizado item : itens) {

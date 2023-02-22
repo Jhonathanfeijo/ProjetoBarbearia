@@ -19,5 +19,7 @@ public interface ServicoRealizadoService {
 	public ServicoRealizadoResponse obterServicoRealizadoResponse(Integer id);
 	
 	public List<ServicoRealizado> buscarServicosRealizadosPorClienteId(Integer id);
+	
+	public Integer obterQuantidadeServicosRealizadosPorClienteId(Integer id);
 
 }

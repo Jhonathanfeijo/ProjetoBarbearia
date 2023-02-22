@@ -30,6 +30,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	@Autowired
 	private UsuarioService usuarioService;
 
+	//Salvar funcionário
 	@Transactional
 	@Override
 	public FuncionarioResponse salvarFuncionario(Funcionario funcionario) {
@@ -37,6 +38,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		return toFuncionarioResponse(funcionario);
 	}
 
+	//Atualizar funcionario por id
 	@Transactional
 	@Override
 	public FuncionarioResponse atualizarFuncionarioPorId(Funcionario funcionario, Integer id) {
@@ -50,13 +52,15 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		return salvarFuncionario(funcionarioEncontrado);
 	}
 
+	//Excluir funcionario por id
 	@Transactional
 	@Override
 	public void excluirFuncionarioPorId(Integer id) {
 		buscarFuncionarioPorId(id);
 		funcionarioRepository.deleteById(id);
 	}
-
+	
+	//Buscar funcionario por id
 	@Override
 	public Funcionario buscarFuncionarioPorId(Integer id) {
 		return funcionarioRepository.findById(id).orElseThrow(() -> new FuncionarioNaoEncontradoException());
@@ -67,7 +71,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		Funcionario funcionario = buscarFuncionarioPorId(id);
 		return toFuncionarioResponse(funcionario);
 	}
-
+	//Converter funcionario para funcionarioResponse
 	public FuncionarioResponse toFuncionarioResponse(Funcionario funcionario) {
 		return funcionarioDTO.toFuncionarioResponse(funcionario);
 	}

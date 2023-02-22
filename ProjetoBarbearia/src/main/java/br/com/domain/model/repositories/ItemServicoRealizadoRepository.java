@@ -13,14 +13,8 @@ import br.com.domain.model.entities.ItemServicoRealizado;
 @Repository
 public interface ItemServicoRealizadoRepository extends JpaRepository<ItemServicoRealizado,Integer> {
 	
-	@Modifying
-	@Query(value = "DELETE FROM item_servico_realizado where servico_realizado_id =:id", nativeQuery = true)
-	public void deletarItensDoPedido(@Param("id")Integer id);
 	
 	@Query(value = "SELECT * FROM item_servico_realizado where servico_realizado_id=:id", nativeQuery = true)
-	public List<ItemServicoRealizado> buscarItemServicoRealizadoPorServicoRealizado(@Param("id")Integer id);
+	public List<ItemServicoRealizado> buscarItensServicoRealizadoPorServicoRealizadoId(@Param("id")Integer id);
 	
-	@Query(value = "SELECT id FROM item_servico_realizado where servico_realizado_id=:id", nativeQuery = true)
-	public List<Integer> buscarIdsItensServicoRealizado(@Param("id") Integer id);
-
 }

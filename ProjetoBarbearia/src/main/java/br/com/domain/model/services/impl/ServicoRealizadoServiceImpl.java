@@ -3,7 +3,6 @@ package br.com.domain.model.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import br.com.domain.model.dto.impl.ServicoRealizadoDTO;
@@ -29,6 +28,7 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 	@Autowired
 	private ItemServicoRealizadoService itemServicoRealizadoService;
 
+	//Salvar ServicoRealizado
 	@Transactional
 	@Override
 	public ServicoRealizadoResponse salvarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest) {
@@ -37,7 +37,7 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 		return toServicoRealizadoResponse(servicoRealizado);
 	}
 
-	@Modifying
+	//Atualizar ServicoRealizado por id
 	@Transactional
 	@Override
 	public ServicoRealizadoResponse atualizarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest,
@@ -51,13 +51,15 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 		return salvarServicoRealizado(servicoRealizadoRequest);
 	}
 
+	//Deletar ServicoRealizado por id
 	@Transactional
 	@Override
 	public void deletarServicoRealizadoPorId(Integer id) {
 		ServicoRealizado servicoRealizadoEncontrado = buscarServicoRealizadoPorId(id);
 		servicoRealizadoRepository.deleteById(servicoRealizadoEncontrado.getId());
 	}
-
+	
+	//Buscar ServicoRealizado por id
 	@Override
 	public ServicoRealizado buscarServicoRealizadoPorId(Integer id) {
 		return servicoRealizadoRepository.findById(id).orElseThrow(() -> new ServicoRealizadoNaoEncontradoException());
@@ -68,7 +70,7 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 		ServicoRealizado servicoRealizado = buscarServicoRealizadoPorId(id);
 		return toServicoRealizadoResponse(servicoRealizado);
 	}
-
+	//Buscar Servicos realizados por cliente atraves do Cliente id
 	@Override
 	public List<ServicoRealizado> buscarServicosRealizadosPorClienteId(Integer id) {
 		List<ServicoRealizado> servicosRealizados = servicoRealizadoRepository.buscarServicoRealizadoPorClienteId(id);
@@ -76,13 +78,18 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 			return null;
 		return servicosRealizados;
 	}
-	
+	//Converter ServicoRealizado para ServicoRealizadoResponse
 	public ServicoRealizadoResponse toServicoRealizadoResponse(ServicoRealizado servicoRealizado) {
 		return servicoRealizadoDTO.toServicoRealizadoResponse(servicoRealizado);
 	}
-
+	//Converter ServicoRealizadoRequest para ServicoRealizado
 	public ServicoRealizado toServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest) {
 		return servicoRealizadoDTO.toServicoRealizado(servicoRealizadoRequest);
+	}
+	//Obter quantidade de servicos realizados por cliente por clienteId
+	@Override
+	public Integer obterQuantidadeServicosRealizadosPorClienteId(Integer id) {
+		return servicoRealizadoRepository.obterQuantidadeServicosRealizadosPorClienteId(id);
 	}
 
 

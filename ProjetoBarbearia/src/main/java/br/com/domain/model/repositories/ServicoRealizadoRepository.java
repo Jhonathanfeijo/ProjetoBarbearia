@@ -15,4 +15,7 @@ public interface ServicoRealizadoRepository extends JpaRepository<ServicoRealiza
 	@Query(value = "SELECT * FROM servico_realizado sr where sr.cliente_id=:id", nativeQuery = true)
 	public List<ServicoRealizado> buscarServicoRealizadoPorClienteId(@Param("id")Integer id);
 
+	@Query(value = "SELECT COUNT(*) FROM servico_realizado sr where cliente_id=:id", nativeQuery = true)
+	public Integer obterQuantidadeServicosRealizadosPorClienteId(@Param("id") Integer id);
+
 }

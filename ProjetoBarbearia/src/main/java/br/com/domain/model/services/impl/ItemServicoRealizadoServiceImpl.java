@@ -15,21 +15,23 @@ public class ItemServicoRealizadoServiceImpl implements ItemServicoRealizadoServ
 	@Autowired
 	private ItemServicoRealizadoRepository itemServicoRealizadoRepository;
 
+	// Transferir id de ItensServicoRealizado desatualizado para
+	// ItensServicoRealizado Atualizado
+	// Caso sobrar Itens, deletar esses itens do ServicoRealizado anterior
 	@Override
 	public List<ItemServicoRealizado> atualizarItemServicoRealizadoList(
 			List<ItemServicoRealizado> itensServicoRealizado, Integer idServicoRealizado) {
-		List<Integer> idItemServicoRealizadoList = itemServicoRealizadoRepository
-				.buscarIdsItensServicoRealizado(idServicoRealizado);
+		List<ItemServicoRealizado> itensDesatualizados = itemServicoRealizadoRepository
+				.buscarItensServicoRealizadoPorServicoRealizadoId(idServicoRealizado);
 		Integer contador = 0;
-		for (Integer idItemServicoRealizado : idItemServicoRealizadoList) {
+		for (ItemServicoRealizado itemDesatualizado : itensDesatualizados) {
 			if (contador < itensServicoRealizado.size()) {
-				itensServicoRealizado.get(contador).setId(idItemServicoRealizado);
+				itensServicoRealizado.get(contador).setId(itemDesatualizado.getId());
 			} else {
-				itemServicoRealizadoRepository.deleteById(idItemServicoRealizado);
+				itemServicoRealizadoRepository.deleteById(itemDesatualizado.getId());
 			}
 			contador++;
 		}
 		return itensServicoRealizado;
 	}
-
 }

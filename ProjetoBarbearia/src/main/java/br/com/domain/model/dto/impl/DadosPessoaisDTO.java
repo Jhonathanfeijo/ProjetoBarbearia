@@ -9,6 +9,7 @@ import br.com.domain.model.entities.DadosPessoais;
 
 @Component
 public class DadosPessoaisDTO {
+	//Converter DadosPessoais para DadosPessoaisResponse
 	public DadosPessoaisResponse toDadosPessoaisResponse(DadosPessoais dados) {
 		String nome = dados.getNome();
 		String cpf = dados.getCpf();

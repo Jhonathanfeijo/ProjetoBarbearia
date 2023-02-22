@@ -37,6 +37,7 @@ public class ServicoRealizadoDTO {
 	@Autowired
 	private CalcularDateTimeServicoRealizado calcularDateTimeServicoRealizado;
 	
+	//Converter ServicoRealizadoRequest para ServicoRealizado
 	public ServicoRealizado toServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest) {
 		Cliente cliente = clienteService.buscarClientePorId(servicoRealizadoRequest.getIdCliente());
 		Funcionario funcionario = funcionarioService.buscarFuncionarioPorId(servicoRealizadoRequest.getIdFuncionario());
@@ -47,6 +48,7 @@ public class ServicoRealizadoDTO {
 		return ServicoRealizado.builder().cliente(cliente).funcionario(funcionario).valorTotal(valorTotal).horaConclusao(horaConclusao).itens(itensServicoRealizado).build();
 	}
 
+	//Converter ServicoRealizado para ServicoRealizadoResponse
 	public ServicoRealizadoResponse toServicoRealizadoResponse (ServicoRealizado servicoRealizado) {
 		String nomeCliente = servicoRealizado.getCliente().getDadosPessoais().getNome();
 		String nomeFuncionario = servicoRealizado.getFuncionario().getDadosPessoais().getNome();

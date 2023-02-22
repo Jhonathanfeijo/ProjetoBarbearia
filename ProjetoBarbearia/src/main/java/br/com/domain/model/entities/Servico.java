@@ -32,5 +32,5 @@ public class Servico {
 	@Column(name = "valor_servico")
 	private BigDecimal valorServico;
 	@Column(name = "duracao_minutos")
-	private Long duracaoMinutos;
+	private Integer duracaoMinutos;
 }

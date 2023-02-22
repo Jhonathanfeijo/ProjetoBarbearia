@@ -29,21 +29,22 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Autowired
 	private UsuarioService usuarioService;
-
+	
+	// Salvar cliente
 	@Transactional
 	@Override
 	public ClienteResponse salvarCliente(Cliente cliente) {
 		cliente = clienteRepository.save(cliente);
 		return toClienteResponse(cliente);
 	}
-
+	//Deletar cliente por id
 	@Transactional
 	@Override
 	public void deletarClientePorId(Integer id) {
 		buscarClientePorId(id);
 		clienteRepository.deleteById(id);
 	}
-
+	// Atualizar cliente por id
 	@Transactional
 	@Override
 	public ClienteResponse atualizarCliente(Cliente cliente, Integer id) {
@@ -56,18 +57,19 @@ public class ClienteServiceImpl implements ClienteService {
 		cliente.setUsuario(usuario);
 		return salvarCliente(clienteEncontrado);
 	}
-
+	
+	//Buscar cliente por id
 	@Override
 	public Cliente buscarClientePorId(Integer id) {
 		return clienteRepository.findById(id).orElseThrow(() -> new ClienteNaoEncontradoException());
 	}
-
+	
 	@Override
 	public ClienteResponse obterClienteResponse(Integer id) {
 		Cliente cliente = buscarClientePorId(id);
 		return toClienteResponse(cliente);
 	}
-
+	//Converter cliente para cliente response
 	public ClienteResponse toClienteResponse(Cliente cliente) {
 		return clienteDTO.toClienteResponse(cliente);
 	}

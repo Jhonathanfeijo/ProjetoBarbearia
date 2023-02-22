@@ -10,10 +10,13 @@ import br.com.domain.model.entities.ItemServicoRealizado;
 @Component
 public class CalcularDateTimeServicoRealizado {
 
+	//Calcula a hora que o ServicoRealizado foi concluido
 	public LocalDateTime calcularConclusao(List<ItemServicoRealizado> itens, LocalDateTime horaServicoRealizado) {
-		LocalDateTime horaConclusao = LocalDateTime.from(horaServicoRealizado);
-		for (ItemServicoRealizado item : itens)
-			horaConclusao = horaConclusao.plusMinutes(item.getServico().getDuracaoMinutos());
+		LocalDateTime horaConclusao = horaServicoRealizado;
+		for (ItemServicoRealizado item : itens) {
+			Integer duracaoItem = item.getQuantidade() * item.getServico().getDuracaoMinutos();
+			horaConclusao = horaConclusao.plusMinutes(duracaoItem);
+			}
 		return horaConclusao;
 	}
 }

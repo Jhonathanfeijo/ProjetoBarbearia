@@ -11,7 +11,7 @@ public class FuncionarioDTO {
 
 	@Autowired
 	private DadosPessoaisDTO dadosPessoaisDTO;
-	
+	//Converter Funcionario para FuncionarioResponse
 	public FuncionarioResponse toFuncionarioResponse(Funcionario funcionario) {
 		DadosPessoaisResponse dadosPessoaisResponse = dadosPessoaisDTO.toDadosPessoaisResponse(funcionario.getDadosPessoais());
 		return FuncionarioResponse.builder().dadosPessoais(dadosPessoaisResponse).build();

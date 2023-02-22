@@ -18,7 +18,7 @@ public class ItemServicoRealizadoDTO {
 
 	@Autowired
 	private ServicoService servicoService;
-
+	//Converter Lista de ItemServicoRealizadoRequest para Lista de ItemServicoRealizado
 	public List<ItemServicoRealizado> toItemServicoRealizadoList(List<ItemServicoRealizadoRequest> itemServicoRealizadoRequest) {
 		List<ItemServicoRealizado> itens = itemServicoRealizadoRequest.stream().map(item -> {
 			Servico servico = servicoService.buscarServicoPorId(item.getIdServico());
@@ -28,6 +28,7 @@ public class ItemServicoRealizadoDTO {
 		return itens;
 	}
 
+	//Converter Lista de ItemServicoRealizado para Lista de ItemServicoRealizadoResponse
 	public List<ItemServicoRealizadoResponse> toItemServicoRealizadoResponseList(
 			List<ItemServicoRealizado> itemServicoRealizado) {
 		return itemServicoRealizado.stream().map(item -> {
