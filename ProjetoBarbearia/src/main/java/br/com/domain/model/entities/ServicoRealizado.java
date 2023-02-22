@@ -1,9 +1,11 @@
 package br.com.domain.model.entities;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +26,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name="servico_realizado")
+@Table(name = "servico_realizado")
 public class ServicoRealizado {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,5 +41,7 @@ public class ServicoRealizado {
 	private BigDecimal valorTotal;
 	@OneToMany(mappedBy = "servicoRealizado", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ItemServicoRealizado> itens;
-	
+	@Column(name = "hora_conclusao")
+	private LocalDateTime horaConclusao;
+
 }

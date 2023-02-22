@@ -29,7 +29,6 @@ public class ItemServicoRealizadoServiceImpl implements ItemServicoRealizadoServ
 			}
 			contador++;
 		}
-
 		return itensServicoRealizado;
 	}
 

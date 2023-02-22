@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ClienteResponse {
 
-	private String nomeCliente;
-	private String cpf;
-	private String rg;
+	private DadosPessoaisResponse dadosPessoais;
+	private Integer quantidadeServicosRealizados;
 	
 }

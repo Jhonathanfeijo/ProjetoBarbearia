@@ -5,11 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class FuncionarioResponse {
+@AllArgsConstructor
+@Builder
+public class DadosPessoaisResponse {
+	
+	private String nome;
+	private String cpf;
+	private String rg;
+	private String dataNascimento;
 
-	private DadosPessoaisResponse dadosPessoais;
 }

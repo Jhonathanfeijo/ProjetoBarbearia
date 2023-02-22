@@ -1,6 +1,8 @@
 package br.com.domain.model.dto.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,8 @@ import br.com.domain.model.entities.Cliente;
 import br.com.domain.model.entities.Funcionario;
 import br.com.domain.model.entities.ItemServicoRealizado;
 import br.com.domain.model.entities.ServicoRealizado;
+import br.com.domain.model.regraDeNegocio.CalcularDateTimeServicoRealizado;
 import br.com.domain.model.regraDeNegocio.CalcularValorServicoRealizado;
-import br.com.domain.model.repositories.ItemServicoRealizadoRepository;
 import br.com.domain.model.services.ClienteService;
 import br.com.domain.model.services.FuncionarioService;
 @Component
@@ -25,25 +27,24 @@ public class ServicoRealizadoDTO {
 
 	@Autowired
 	private ClienteService clienteService;
+
+	@Autowired
+	private ItemServicoRealizadoDTO itemServicoRealizadoDTO;
 	
 	@Autowired
 	private CalcularValorServicoRealizado calcularValorServicoRealizado;
 	
 	@Autowired
-	private ItemServicoRealizadoDTO itemServicoRealizadoDTO;
-
+	private CalcularDateTimeServicoRealizado calcularDateTimeServicoRealizado;
+	
 	public ServicoRealizado toServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest) {
-		ServicoRealizado servicoRealizado = new ServicoRealizado();
 		Cliente cliente = clienteService.buscarClientePorId(servicoRealizadoRequest.getIdCliente());
 		Funcionario funcionario = funcionarioService.buscarFuncionarioPorId(servicoRealizadoRequest.getIdFuncionario());
 		List<ItemServicoRealizado> itensServicoRealizado = itemServicoRealizadoDTO
-				.toItemServicoRealizadoList(servicoRealizadoRequest.getItens(),servicoRealizado);
+				.toItemServicoRealizadoList(servicoRealizadoRequest.getItens());
+		LocalDateTime horaConclusao = calcularDateTimeServicoRealizado.calcularConclusao(itensServicoRealizado, LocalDateTime.now());
 		BigDecimal valorTotal = calcularValorServicoRealizado.calcularValorServicoRealizado(itensServicoRealizado);
-		servicoRealizado.setCliente(cliente);
-		servicoRealizado.setFuncionario(funcionario);
-		servicoRealizado.setItens(itensServicoRealizado);
-		servicoRealizado.setValorTotal(valorTotal);
-		return servicoRealizado;
+		return ServicoRealizado.builder().cliente(cliente).funcionario(funcionario).valorTotal(valorTotal).horaConclusao(horaConclusao).itens(itensServicoRealizado).build();
 	}
 
 	public ServicoRealizadoResponse toServicoRealizadoResponse (ServicoRealizado servicoRealizado) {
@@ -51,6 +52,9 @@ public class ServicoRealizadoDTO {
 		String nomeFuncionario = servicoRealizado.getFuncionario().getDadosPessoais().getNome();
 		BigDecimal valorTotal = servicoRealizado.getValorTotal();
 		List<ItemServicoRealizadoResponse> itensServicoRealizadoResponse = itemServicoRealizadoDTO.toItemServicoRealizadoResponseList(servicoRealizado.getItens());
-		return ServicoRealizadoResponse.builder().nomeCliente(nomeCliente).nomeFuncionario(nomeFuncionario).valorTotal(valorTotal).itens(itensServicoRealizadoResponse).build();
+		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm");
+		String horaConclusao = formatador.format(servicoRealizado.getHoraConclusao());
+		return ServicoRealizadoResponse.builder().nomeCliente(nomeCliente).nomeFuncionario(nomeFuncionario)
+				.valorTotal(valorTotal).itens(itensServicoRealizadoResponse).horaConclusao(horaConclusao).build();
 	}
 }

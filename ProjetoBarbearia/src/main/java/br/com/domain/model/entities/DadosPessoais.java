@@ -1,5 +1,7 @@
 package br.com.domain.model.entities;
 
+import java.time.LocalDate;
+
 import org.hibernate.validator.constraints.br.CPF;
 
 import jakarta.persistence.Column;
@@ -33,4 +35,5 @@ public class DadosPessoais {
 	@NotEmpty
 	@Column(name = "rg")
 	private String rg;
+	private LocalDate dataNascimento;
 }

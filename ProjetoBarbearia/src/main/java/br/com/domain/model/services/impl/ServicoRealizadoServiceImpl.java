@@ -42,14 +42,13 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 	@Override
 	public ServicoRealizadoResponse atualizarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest,
 			Integer id) {
-		buscarServicoRealizadoPorId(id);
-		ServicoRealizado servicoRealizado = toServicoRealizado(servicoRealizadoRequest);
+		ServicoRealizado servicoRealizado = buscarServicoRealizadoPorId(id);
+		servicoRealizado = toServicoRealizado(servicoRealizadoRequest);
 		List<ItemServicoRealizado> itensAtualizados = itemServicoRealizadoService
 				.atualizarItemServicoRealizadoList(servicoRealizado.getItens(), id);
 		servicoRealizado.setId(id);
 		servicoRealizado.setItens(itensAtualizados);
-		servicoRealizado = servicoRealizadoRepository.save(servicoRealizado);
-		return toServicoRealizadoResponse(servicoRealizado);
+		return salvarServicoRealizado(servicoRealizadoRequest);
 	}
 
 	@Transactional
@@ -70,6 +69,14 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 		return toServicoRealizadoResponse(servicoRealizado);
 	}
 
+	@Override
+	public List<ServicoRealizado> buscarServicosRealizadosPorClienteId(Integer id) {
+		List<ServicoRealizado> servicosRealizados = servicoRealizadoRepository.buscarServicoRealizadoPorClienteId(id);
+		if(servicosRealizados == null)
+			return null;
+		return servicosRealizados;
+	}
+	
 	public ServicoRealizadoResponse toServicoRealizadoResponse(ServicoRealizado servicoRealizado) {
 		return servicoRealizadoDTO.toServicoRealizadoResponse(servicoRealizado);
 	}
@@ -77,5 +84,6 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 	public ServicoRealizado toServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest) {
 		return servicoRealizadoDTO.toServicoRealizado(servicoRealizadoRequest);
 	}
+
 
 }

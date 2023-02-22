@@ -19,11 +19,11 @@ public class ItemServicoRealizadoDTO {
 	@Autowired
 	private ServicoService servicoService;
 
-	public List<ItemServicoRealizado> toItemServicoRealizadoList(List<ItemServicoRealizadoRequest> itemServicoRealizadoRequest, ServicoRealizado servicoRealizado) {
+	public List<ItemServicoRealizado> toItemServicoRealizadoList(List<ItemServicoRealizadoRequest> itemServicoRealizadoRequest) {
 		List<ItemServicoRealizado> itens = itemServicoRealizadoRequest.stream().map(item -> {
 			Servico servico = servicoService.buscarServicoPorId(item.getIdServico());
 			Integer quantidadeServico = item.getQuantidade();
-			return ItemServicoRealizado.builder().servico(servico).quantidade(quantidadeServico).servicoRealizado(servicoRealizado).build();
+			return ItemServicoRealizado.builder().servico(servico).quantidade(quantidadeServico).build();
 		}).collect(Collectors.toList());
 		return itens;
 	}

@@ -16,5 +16,6 @@ public class ServicoRealizadoResponse {
 	private String nomeFuncionario;
 	private List<ItemServicoRealizadoResponse> itens;
 	private BigDecimal valorTotal;
+	private String horaConclusao;
 	
 }

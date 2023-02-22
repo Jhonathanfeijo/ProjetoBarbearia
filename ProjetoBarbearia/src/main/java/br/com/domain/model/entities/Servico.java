@@ -29,6 +29,8 @@ public class Servico {
 	@Column(name = "nome_servico")
 	private String nomeServico;
 	@NotNull
-	@Column(name="valor_servico")
+	@Column(name = "valor_servico")
 	private BigDecimal valorServico;
+	@Column(name = "duracao_minutos")
+	private Long duracaoMinutos;
 }
