@@ -27,6 +27,7 @@ public class ItemServicoRealizadoServiceImpl implements ItemServicoRealizadoServ
 		for (ItemServicoRealizado itemDesatualizado : itensDesatualizados) {
 			if (contador < itensServicoRealizado.size()) {
 				itensServicoRealizado.get(contador).setId(itemDesatualizado.getId());
+				
 			} else {
 				itemServicoRealizadoRepository.deleteById(itemDesatualizado.getId());
 			}

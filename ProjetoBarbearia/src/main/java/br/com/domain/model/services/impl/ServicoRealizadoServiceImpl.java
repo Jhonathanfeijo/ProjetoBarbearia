@@ -28,22 +28,20 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 	@Autowired
 	private ItemServicoRealizadoService itemServicoRealizadoService;
 
-	//Salvar ServicoRealizado
+	// Salvar ServicoRealizado
 	@Transactional
 	@Override
-	public ServicoRealizadoResponse salvarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest) {
+	public ServicoRealizado salvarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest) {
 		ServicoRealizado servicoRealizado = toServicoRealizado(servicoRealizadoRequest);
-		servicoRealizado = servicoRealizadoRepository.save(servicoRealizado);
-		return toServicoRealizadoResponse(servicoRealizado);
+		return servicoRealizadoRepository.save(servicoRealizado);
 	}
 
-	//Atualizar ServicoRealizado por id
+	// Atualizar ServicoRealizado por id
 	@Transactional
 	@Override
-	public ServicoRealizadoResponse atualizarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest,
-			Integer id) {
-		ServicoRealizado servicoRealizado = buscarServicoRealizadoPorId(id);
-		servicoRealizado = toServicoRealizado(servicoRealizadoRequest);
+	public ServicoRealizado atualizarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest, Integer id) {
+		ServicoRealizado servicoRealizadoDesatualizado = buscarServicoRealizadoPorId(id);
+		ServicoRealizado servicoRealizado = toServicoRealizado(servicoRealizadoRequest);
 		List<ItemServicoRealizado> itensAtualizados = itemServicoRealizadoService
 				.atualizarItemServicoRealizadoList(servicoRealizado.getItens(), id);
 		servicoRealizado.setId(id);
@@ -51,46 +49,37 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 		return salvarServicoRealizado(servicoRealizadoRequest);
 	}
 
-	//Deletar ServicoRealizado por id
+	// Deletar ServicoRealizado por id
 	@Transactional
 	@Override
 	public void deletarServicoRealizadoPorId(Integer id) {
 		ServicoRealizado servicoRealizadoEncontrado = buscarServicoRealizadoPorId(id);
 		servicoRealizadoRepository.deleteById(servicoRealizadoEncontrado.getId());
 	}
-	
-	//Buscar ServicoRealizado por id
+
+	// Buscar ServicoRealizado por id
 	@Override
 	public ServicoRealizado buscarServicoRealizadoPorId(Integer id) {
 		return servicoRealizadoRepository.findById(id).orElseThrow(() -> new ServicoRealizadoNaoEncontradoException());
 	}
 
-	@Override
-	public ServicoRealizadoResponse obterServicoRealizadoResponse(Integer id) {
-		ServicoRealizado servicoRealizado = buscarServicoRealizadoPorId(id);
-		return toServicoRealizadoResponse(servicoRealizado);
-	}
-	//Buscar Servicos realizados por cliente atraves do Cliente id
+	// Buscar Servicos realizados por cliente atraves do Cliente id
 	@Override
 	public List<ServicoRealizado> buscarServicosRealizadosPorClienteId(Integer id) {
 		List<ServicoRealizado> servicosRealizados = servicoRealizadoRepository.buscarServicoRealizadoPorClienteId(id);
-		if(servicosRealizados == null)
+		if (servicosRealizados == null)
 			return null;
 		return servicosRealizados;
 	}
-	//Converter ServicoRealizado para ServicoRealizadoResponse
-	public ServicoRealizadoResponse toServicoRealizadoResponse(ServicoRealizado servicoRealizado) {
-		return servicoRealizadoDTO.toServicoRealizadoResponse(servicoRealizado);
-	}
-	//Converter ServicoRealizadoRequest para ServicoRealizado
+
+	// Converter ServicoRealizadoRequest para ServicoRealizado
 	public ServicoRealizado toServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest) {
 		return servicoRealizadoDTO.toServicoRealizado(servicoRealizadoRequest);
 	}
-	//Obter quantidade de servicos realizados por cliente por clienteId
+
+	// Obter quantidade de servicos realizados por cliente por clienteId
 	@Override
 	public Integer obterQuantidadeServicosRealizadosPorClienteId(Integer id) {
 		return servicoRealizadoRepository.obterQuantidadeServicosRealizadosPorClienteId(id);
 	}
-
-
 }

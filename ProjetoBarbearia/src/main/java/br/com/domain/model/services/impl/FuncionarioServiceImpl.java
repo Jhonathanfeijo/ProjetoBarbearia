@@ -3,8 +3,6 @@ package br.com.domain.model.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.domain.model.dto.impl.FuncionarioDTO;
-import br.com.domain.model.dto.response.FuncionarioResponse;
 import br.com.domain.model.entities.DadosPessoais;
 import br.com.domain.model.entities.Funcionario;
 import br.com.domain.model.entities.Usuario;
@@ -22,9 +20,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	private FuncionarioRepository funcionarioRepository;
 
 	@Autowired
-	private FuncionarioDTO funcionarioDTO;
-
-	@Autowired
 	private DadosPessoaisService dadosPessoaisService;
 
 	@Autowired
@@ -33,15 +28,14 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	//Salvar funcionário
 	@Transactional
 	@Override
-	public FuncionarioResponse salvarFuncionario(Funcionario funcionario) {
-		funcionario = funcionarioRepository.save(funcionario);
-		return toFuncionarioResponse(funcionario);
+	public Funcionario salvarFuncionario(Funcionario funcionario) {
+		return funcionarioRepository.save(funcionario);
 	}
 
 	//Atualizar funcionario por id
 	@Transactional
 	@Override
-	public FuncionarioResponse atualizarFuncionarioPorId(Funcionario funcionario, Integer id) {
+	public Funcionario atualizarFuncionarioPorId(Funcionario funcionario, Integer id) {
 		Funcionario funcionarioEncontrado = buscarFuncionarioPorId(id);
 		DadosPessoais dadosPessoais = dadosPessoaisService
 				.atualizarDadosPessoais(funcionarioEncontrado.getDadosPessoais(), funcionario.getDadosPessoais());
@@ -66,13 +60,4 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		return funcionarioRepository.findById(id).orElseThrow(() -> new FuncionarioNaoEncontradoException());
 	}
 
-	@Override
-	public FuncionarioResponse buscarFuncionarioResponse(Integer id) {
-		Funcionario funcionario = buscarFuncionarioPorId(id);
-		return toFuncionarioResponse(funcionario);
-	}
-	//Converter funcionario para funcionarioResponse
-	public FuncionarioResponse toFuncionarioResponse(Funcionario funcionario) {
-		return funcionarioDTO.toFuncionarioResponse(funcionario);
-	}
 }

@@ -10,7 +10,6 @@ import br.com.domain.model.dto.request.ItemServicoRealizadoRequest;
 import br.com.domain.model.dto.response.ItemServicoRealizadoResponse;
 import br.com.domain.model.entities.ItemServicoRealizado;
 import br.com.domain.model.entities.Servico;
-import br.com.domain.model.entities.ServicoRealizado;
 import br.com.domain.model.services.ServicoService;
 
 @Component
@@ -18,8 +17,11 @@ public class ItemServicoRealizadoDTO {
 
 	@Autowired
 	private ServicoService servicoService;
-	//Converter Lista de ItemServicoRealizadoRequest para Lista de ItemServicoRealizado
-	public List<ItemServicoRealizado> toItemServicoRealizadoList(List<ItemServicoRealizadoRequest> itemServicoRealizadoRequest) {
+
+	// Converter Lista de ItemServicoRealizadoRequest para Lista de
+	// ItemServicoRealizado
+	public List<ItemServicoRealizado> toItemServicoRealizadoList(
+			List<ItemServicoRealizadoRequest> itemServicoRealizadoRequest) {
 		List<ItemServicoRealizado> itens = itemServicoRealizadoRequest.stream().map(item -> {
 			Servico servico = servicoService.buscarServicoPorId(item.getIdServico());
 			Integer quantidadeServico = item.getQuantidade();
@@ -28,7 +30,8 @@ public class ItemServicoRealizadoDTO {
 		return itens;
 	}
 
-	//Converter Lista de ItemServicoRealizado para Lista de ItemServicoRealizadoResponse
+	// Converter Lista de ItemServicoRealizado para Lista de
+	// ItemServicoRealizadoResponse
 	public List<ItemServicoRealizadoResponse> toItemServicoRealizadoResponseList(
 			List<ItemServicoRealizado> itemServicoRealizado) {
 		return itemServicoRealizado.stream().map(item -> {

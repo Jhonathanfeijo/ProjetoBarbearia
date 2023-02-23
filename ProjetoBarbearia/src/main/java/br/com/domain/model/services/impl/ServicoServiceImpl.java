@@ -14,15 +14,15 @@ public class ServicoServiceImpl implements ServicoService {
 
 	@Autowired
 	private ServicoRepository servicoRepository;
-	
-	//Salvar servico
+
+	// Salvar servico
 	@Transactional
 	@Override
 	public Servico salvarServico(Servico servico) {
 		return servicoRepository.save(servico);
 	}
 
-	//Deletar Servico por id
+	// Deletar Servico por id
 	@Transactional
 	@Override
 	public void deletarServico(Integer id) {
@@ -30,7 +30,7 @@ public class ServicoServiceImpl implements ServicoService {
 		servicoRepository.deleteById(id);
 	}
 
-	//Atualizar servico por id
+	// Atualizar servico por id
 	@Transactional
 	@Override
 	public Servico atualizarServico(Servico servico, Integer id) {
@@ -39,7 +39,7 @@ public class ServicoServiceImpl implements ServicoService {
 		return servicoRepository.save(servico);
 	}
 
-	//Buscar servico por id
+	// Buscar servico por id
 	@Override
 	public Servico buscarServicoPorId(Integer id) {
 		return servicoRepository.findById(id).orElseThrow(() -> new ServicoNaoEncontradoException());

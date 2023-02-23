@@ -3,8 +3,6 @@ package br.com.domain.model.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.domain.model.dto.impl.ClienteDTO;
-import br.com.domain.model.dto.response.ClienteResponse;
 import br.com.domain.model.entities.Cliente;
 import br.com.domain.model.entities.DadosPessoais;
 import br.com.domain.model.entities.Usuario;
@@ -22,9 +20,6 @@ public class ClienteServiceImpl implements ClienteService {
 	private ClienteRepository clienteRepository;
 
 	@Autowired
-	private ClienteDTO clienteDTO;
-
-	@Autowired
 	private DadosPessoaisService dadosPessoaisService;
 
 	@Autowired
@@ -33,9 +28,8 @@ public class ClienteServiceImpl implements ClienteService {
 	// Salvar cliente
 	@Transactional
 	@Override
-	public ClienteResponse salvarCliente(Cliente cliente) {
-		cliente = clienteRepository.save(cliente);
-		return toClienteResponse(cliente);
+	public Cliente salvarCliente(Cliente cliente) {
+		return clienteRepository.save(cliente);
 	}
 	//Deletar cliente por id
 	@Transactional
@@ -47,7 +41,7 @@ public class ClienteServiceImpl implements ClienteService {
 	// Atualizar cliente por id
 	@Transactional
 	@Override
-	public ClienteResponse atualizarCliente(Cliente cliente, Integer id) {
+	public Cliente atualizarCliente(Cliente cliente, Integer id) {
 		Cliente clienteEncontrado = buscarClientePorId(id);
 		DadosPessoais dadosPessoais = dadosPessoaisService.atualizarDadosPessoais(clienteEncontrado.getDadosPessoais(),
 				cliente.getDadosPessoais());
@@ -64,14 +58,5 @@ public class ClienteServiceImpl implements ClienteService {
 		return clienteRepository.findById(id).orElseThrow(() -> new ClienteNaoEncontradoException());
 	}
 	
-	@Override
-	public ClienteResponse obterClienteResponse(Integer id) {
-		Cliente cliente = buscarClientePorId(id);
-		return toClienteResponse(cliente);
-	}
-	//Converter cliente para cliente response
-	public ClienteResponse toClienteResponse(Cliente cliente) {
-		return clienteDTO.toClienteResponse(cliente);
-	}
 
 }

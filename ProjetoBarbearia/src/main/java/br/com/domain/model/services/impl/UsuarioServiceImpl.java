@@ -8,9 +8,9 @@ import br.com.domain.model.services.UsuarioService;
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 //Atualizar usuario -> transferir id para Usuario atualizado
-@Override
-public Usuario atualizarUsuario(Usuario usuarioDesatualizado, Usuario usuarioAtualizado) {
-	usuarioAtualizado.setId(usuarioDesatualizado.getId());
-	return usuarioAtualizado;
+	@Override
+	public Usuario atualizarUsuario(Usuario usuarioDesatualizado, Usuario usuarioAtualizado) {
+		usuarioAtualizado.setId(usuarioDesatualizado.getId());
+		return usuarioAtualizado;
 	}
 }
