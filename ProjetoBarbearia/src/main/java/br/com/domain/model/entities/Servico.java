@@ -31,6 +31,7 @@ public class Servico {
 	@NotNull
 	@Column(name = "valor_servico")
 	private BigDecimal valorServico;
+	@NotNull
 	@Column(name = "duracao_minutos")
 	private Integer duracaoMinutos;
 }

@@ -22,7 +22,7 @@ public class ItemServicoRealizadoServiceImpl implements ItemServicoRealizadoServ
 	public List<ItemServicoRealizado> atualizarItemServicoRealizadoList(
 			List<ItemServicoRealizado> itensServicoRealizado, Integer idServicoRealizado) {
 		List<ItemServicoRealizado> itensDesatualizados = itemServicoRealizadoRepository
-				.buscarItensServicoRealizadoPorServicoRealizadoId(idServicoRealizado);
+				.buscarItemServicoRealizadoListPorServicoRealizadoId(idServicoRealizado);
 		Integer contador = 0;
 		for (ItemServicoRealizado itemDesatualizado : itensDesatualizados) {
 			if (contador < itensServicoRealizado.size()) {

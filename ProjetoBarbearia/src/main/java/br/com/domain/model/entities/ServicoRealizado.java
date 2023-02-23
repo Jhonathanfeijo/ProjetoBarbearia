@@ -7,7 +7,6 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,8 +38,9 @@ public class ServicoRealizado {
 	private Cliente cliente;
 	@NotNull
 	private BigDecimal valorTotal;
-	@OneToMany(mappedBy = "servicoRealizado", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "servicoRealizado", cascade = CascadeType.ALL)
 	private List<ItemServicoRealizado> itens;
+	@NotNull
 	@Column(name = "hora_conclusao")
 	private LocalDateTime horaConclusao;
 

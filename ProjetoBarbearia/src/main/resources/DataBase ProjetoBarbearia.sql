@@ -53,7 +53,7 @@ id integer NOT NULL auto_increment,
 valor_total numeric,
 cliente_id integer,
 funcionario_id integer,
-hora_conclusao date,
+hora_conclusao datetime,
 primary key(id)
 );
 
@@ -65,4 +65,3 @@ ALTER TABLE servico_realizado ADD CONSTRAINT fk_servico_realizado_cliente foreig
 ALTER TABLE servico_realizado ADD CONSTRAINT fk_servico_realizado_funcionario foreign key (funcionario_id) references funcionario (id);
 ALTER TABLE item_servico_realizado ADD CONSTRAINT fk_item_servico_realizado_servico_realizado foreign key (servico_realizado_id) references servico_realizado(id);
 ALTER TABLE item_servico_realizado ADD CONSTRAINT fk_item_servico_realizado_servico foreign key (servico_id) references servico(id);
-

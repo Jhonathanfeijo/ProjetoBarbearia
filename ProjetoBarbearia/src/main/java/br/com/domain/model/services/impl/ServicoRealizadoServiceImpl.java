@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.domain.model.dto.impl.ServicoRealizadoDTO;
 import br.com.domain.model.dto.request.ServicoRealizadoRequest;
-import br.com.domain.model.dto.response.ServicoRealizadoResponse;
 import br.com.domain.model.entities.ItemServicoRealizado;
 import br.com.domain.model.entities.ServicoRealizado;
 import br.com.domain.model.exceptions.ServicoRealizadoNaoEncontradoException;
@@ -40,13 +39,13 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 	@Transactional
 	@Override
 	public ServicoRealizado atualizarServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest, Integer id) {
-		ServicoRealizado servicoRealizadoDesatualizado = buscarServicoRealizadoPorId(id);
-		ServicoRealizado servicoRealizado = toServicoRealizado(servicoRealizadoRequest);
+		ServicoRealizado servicoRealizado = buscarServicoRealizadoPorId(id);
+		servicoRealizado = toServicoRealizado(servicoRealizadoRequest);
 		List<ItemServicoRealizado> itensAtualizados = itemServicoRealizadoService
 				.atualizarItemServicoRealizadoList(servicoRealizado.getItens(), id);
 		servicoRealizado.setId(id);
 		servicoRealizado.setItens(itensAtualizados);
-		return salvarServicoRealizado(servicoRealizadoRequest);
+		return servicoRealizadoRepository.save(servicoRealizado);
 	}
 
 	// Deletar ServicoRealizado por id
@@ -63,10 +62,12 @@ public class ServicoRealizadoServiceImpl implements ServicoRealizadoService {
 		return servicoRealizadoRepository.findById(id).orElseThrow(() -> new ServicoRealizadoNaoEncontradoException());
 	}
 
-	// Buscar Servicos realizados por cliente atraves do Cliente id
+	// Buscar Servicos realizados por cliente atraves do Cliente id, se não
+	// encontrar lança exception
 	@Override
 	public List<ServicoRealizado> buscarServicosRealizadosPorClienteId(Integer id) {
-		List<ServicoRealizado> servicosRealizados = servicoRealizadoRepository.buscarServicoRealizadoPorClienteId(id);
+		List<ServicoRealizado> servicosRealizados = servicoRealizadoRepository
+				.buscarServicoRealizadoListPorClienteId(id);
 		if (servicosRealizados == null)
 			return null;
 		return servicosRealizados;

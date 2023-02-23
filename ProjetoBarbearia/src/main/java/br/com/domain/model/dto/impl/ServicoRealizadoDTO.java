@@ -39,13 +39,19 @@ public class ServicoRealizadoDTO {
 	
 	//Converter ServicoRealizadoRequest para ServicoRealizado
 	public ServicoRealizado toServicoRealizado(ServicoRealizadoRequest servicoRealizadoRequest) {
+		ServicoRealizado servicoRealizado = new ServicoRealizado();
 		Cliente cliente = clienteService.buscarClientePorId(servicoRealizadoRequest.getIdCliente());
 		Funcionario funcionario = funcionarioService.buscarFuncionarioPorId(servicoRealizadoRequest.getIdFuncionario());
 		List<ItemServicoRealizado> itensServicoRealizado = itemServicoRealizadoDTO
-				.toItemServicoRealizadoList(servicoRealizadoRequest.getItens());
+				.toItemServicoRealizadoList(servicoRealizadoRequest.getItens(), servicoRealizado);
 		LocalDateTime horaConclusao = calcularDateTimeServicoRealizado.calcularConclusao(itensServicoRealizado, LocalDateTime.now());
 		BigDecimal valorTotal = calcularValorServicoRealizado.calcularValorServicoRealizado(itensServicoRealizado);
-		return ServicoRealizado.builder().cliente(cliente).funcionario(funcionario).valorTotal(valorTotal).horaConclusao(horaConclusao).itens(itensServicoRealizado).build();
+		servicoRealizado.setCliente(cliente);
+		servicoRealizado.setFuncionario(funcionario);
+		servicoRealizado.setHoraConclusao(horaConclusao);
+		servicoRealizado.setItens(itensServicoRealizado);
+		servicoRealizado.setValorTotal(valorTotal);
+		return servicoRealizado;
 	}
 
 	//Converter ServicoRealizado para ServicoRealizadoResponse

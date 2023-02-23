@@ -13,8 +13,8 @@ import br.com.domain.model.entities.ItemServicoRealizado;
 @Repository
 public interface ItemServicoRealizadoRepository extends JpaRepository<ItemServicoRealizado,Integer> {
 	
-	
+	//Listar itens de determinado servico realizado
 	@Query(value = "SELECT * FROM item_servico_realizado where servico_realizado_id=:id", nativeQuery = true)
-	public List<ItemServicoRealizado> buscarItensServicoRealizadoPorServicoRealizadoId(@Param("id")Integer id);
+	public List<ItemServicoRealizado> buscarItemServicoRealizadoListPorServicoRealizadoId(@Param("id")Integer id);
 	
 }
