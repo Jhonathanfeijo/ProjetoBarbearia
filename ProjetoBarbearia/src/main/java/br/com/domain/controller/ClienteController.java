@@ -1,7 +1,9 @@
 package br.com.domain.controller;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,48 +11,52 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.domain.model.dto.impl.ClienteDTO;
-import br.com.domain.model.dto.response.ClienteResponse;
-import br.com.domain.model.entities.Cliente;
-import br.com.domain.model.services.ClienteService;
+import br.com.domain.model.cliente.Cliente;
+import br.com.domain.model.cliente.ClienteDadosCadastro;
+import br.com.domain.model.cliente.ClienteInformacoes;
+import br.com.domain.model.cliente.ClienteRepository;
+import br.com.domain.model.cliente.DadosAtualizacaoCliente;
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/cliente")
+@RequestMapping("/cliente")
 public class ClienteController {
 
 	@Autowired
-	private ClienteService clienteService;
-
-	@Autowired
-	private ClienteDTO clienteDTO;
+	private ClienteRepository clienteRepository;
 
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public ClienteResponse salvarCliente(@RequestBody Cliente cliente) {
-		cliente = clienteService.salvarCliente(cliente);
-		return clienteDTO.toClienteResponse(cliente);
+	public ResponseEntity cadastrarCliente(@RequestBody @Valid ClienteDadosCadastro dadosCadastro,
+			UriComponentsBuilder uriBuilder) {
+		
+		Cliente cliente = clienteRepository.save(new Cliente(dadosCadastro));
+		URI uri = uriBuilder.path("/api/cliente/{id}").buildAndExpand(cliente.getId()).toUri();
+		return ResponseEntity.created(uri).body(new ClienteInformacoes(cliente));
 	}
 
 	@DeleteMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deletarCliente(@PathVariable("id") Integer id) {
-		clienteService.deletarClientePorId(id);
+	public ResponseEntity deletarCliente(@PathVariable("id") Long id) {
+		
+		Cliente cliente = clienteRepository.getReferenceById(id);
+		return ResponseEntity.noContent().build();
 	}
 
 	@PutMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ClienteResponse atualizarCliente(@RequestBody Cliente cliente, @PathVariable("id") Integer id) {
-		cliente = clienteService.atualizarCliente(cliente, id);
-		return clienteDTO.toClienteResponse(cliente);
+	public ResponseEntity atualizarCliente(@RequestBody DadosAtualizacaoCliente dadosCliente) {
+
+		Cliente cliente = clienteRepository.getReferenceById(dadosCliente.getId());
+		cliente.atualizarInformacoes(dadosCliente);
+		return ResponseEntity.ok().body(new ClienteInformacoes(cliente));
 	}
 
 	@GetMapping("/{id}")
-	public ClienteResponse buscarClientePorId(@PathVariable("id") Integer id) {
-		Cliente cliente = clienteService.buscarClientePorId(id);
-		return clienteDTO.toClienteResponse(cliente);
+	public ResponseEntity buscarClientePorId(@PathVariable("id") Long id) 
+	{
+		Cliente cliente = clienteRepository.getReferenceById(id);
+		return ResponseEntity.ok().body(new ClienteInformacoes(cliente));
 	}
 
 }
