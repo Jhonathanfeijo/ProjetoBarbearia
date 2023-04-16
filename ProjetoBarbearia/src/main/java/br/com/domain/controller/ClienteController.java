@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.domain.model.cliente.Cliente;
+import br.com.domain.model.cliente.ClienteDadosAtualizacao;
 import br.com.domain.model.cliente.ClienteDadosCadastro;
 import br.com.domain.model.cliente.ClienteInformacoes;
 import br.com.domain.model.cliente.ClienteRepository;
-import br.com.domain.model.cliente.DadosAtualizacaoCliente;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -47,7 +47,7 @@ public class ClienteController {
 	}
 	@Transactional
 	@PutMapping
-	public ResponseEntity atualizarCliente(@RequestBody @Valid DadosAtualizacaoCliente dadosCliente) {
+	public ResponseEntity atualizarCliente(@RequestBody @Valid ClienteDadosAtualizacao dadosCliente) {
 
 		Cliente cliente = clienteRepository.getReferenceById(dadosCliente.getId());
 		cliente.atualizarInformacoes(dadosCliente);

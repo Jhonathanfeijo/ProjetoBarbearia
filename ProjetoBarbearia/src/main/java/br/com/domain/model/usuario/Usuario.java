@@ -37,13 +37,13 @@ public class Usuario implements UserDetails {
 		return encoder.encode(senha);
 	}
 	
-	public Usuario(DadosCadastroUsuario dadosUsuario) {
+	public Usuario(UsuarioDadosCadastro dadosUsuario) {
 		this.id = null;
 		this.login = dadosUsuario.getLogin();
 		this.senha = encoder(dadosUsuario.getSenha());
 	}
 
-	public void atualizar(DadosAtualizacaoUsuario usuario) {
+	public void atualizar(UsuarioDadosAtualizacao usuario) {
 		
 		if (usuario.getLogin() != null) {
 			this.login = usuario.getLogin();

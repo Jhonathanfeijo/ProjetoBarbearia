@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.domain.model.usuario.DadosCadastroUsuario;
+import br.com.domain.model.usuario.UsuarioDadosCadastro;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,5 +27,5 @@ public class ClienteDadosCadastro {
 
 	@NotNull
 	@Valid
-	private DadosCadastroUsuario dadosUsuario;
+	private UsuarioDadosCadastro dadosUsuario;
 }

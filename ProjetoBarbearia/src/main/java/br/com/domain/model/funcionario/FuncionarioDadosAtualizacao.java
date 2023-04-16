@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.domain.model.usuario.DadosAtualizacaoUsuario;
+import br.com.domain.model.usuario.UsuarioDadosAtualizacao;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
@@ -16,5 +16,5 @@ public class FuncionarioDadosAtualizacao {
 	private String nome;
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate dataNascimento;
-	private DadosAtualizacaoUsuario dadosUsuario;
+	private UsuarioDadosAtualizacao dadosUsuario;
 }

@@ -50,7 +50,7 @@ public class Cliente {
 		this.usuario = new Usuario(dados.getDadosUsuario());
 	}
 
-	public void atualizarInformacoes(DadosAtualizacaoCliente dados) {
+	public void atualizarInformacoes(ClienteDadosAtualizacao dados) {
 		
 		if(dados.getNome() != null)
 			this.nome = dados.getNome();
