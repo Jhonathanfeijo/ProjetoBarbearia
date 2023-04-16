@@ -2,6 +2,8 @@ package br.com.domain.model.funcionario;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.domain.model.usuario.DadosAtualizacaoUsuario;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -12,8 +14,7 @@ public class FuncionarioDadosAtualizacao {
 	@NotNull
 	private Long id;
 	private String nome;
-	private String cpf;
-	private String rg;
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate dataNascimento;
 	private DadosAtualizacaoUsuario dadosUsuario;
 }

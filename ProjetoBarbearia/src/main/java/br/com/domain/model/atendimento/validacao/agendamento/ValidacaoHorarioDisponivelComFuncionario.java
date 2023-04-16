@@ -16,6 +16,7 @@ public class ValidacaoHorarioDisponivelComFuncionario implements ValidacaoAgenda
 	
 	@Override
 	public void validar(AtendimentoDadosAgendamento dados) {
+		System.out.println("AAA");
 		boolean horarioEstaOcupado = atendimentoRepository.existsByFuncionarioIdAndHorarioMarcado( dados.getIdFuncionario(),  dados.getHorario());
 		if(horarioEstaOcupado)
 			throw new RuntimeException("Funcionário já tem atendimento para esse horário");

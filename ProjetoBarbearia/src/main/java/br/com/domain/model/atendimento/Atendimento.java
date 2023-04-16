@@ -50,7 +50,6 @@ public class Atendimento {
 
 	@Enumerated(EnumType.STRING)
 	private Status status;
-
 	@OneToMany(mappedBy = "atendimento", cascade = CascadeType.ALL)
 	private List<ItemAtendimento> itens;
 
@@ -58,7 +57,7 @@ public class Atendimento {
 		this.status = Status.MARCADO;
 		this.cliente = cliente;
 		this.funcionario = funcionario;
-		this.itens = itens;
+		this.itens = atribuirAtendimentoEmListaItens(itens);
 		this.horarioMarcado = horarioMarcado;
 		this.valorAtendimento = obterValorTotalAtendimento(itens);
 		this.horarioFinal = obterHorarioFinal(horarioMarcado, itens);
@@ -80,8 +79,16 @@ public class Atendimento {
 		}
 		return horarioFinal;
 	}
+	
+	private List<ItemAtendimento> atribuirAtendimentoEmListaItens(List<ItemAtendimento> itens){
+		for(ItemAtendimento item : itens) {
+			item.setAtendimento(this);
+		}
+		return itens;
+	}
 
 	public void cancelar() {
+		
 		this.status = Status.CANCELADO;
 	}
 }

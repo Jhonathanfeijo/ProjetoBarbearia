@@ -55,9 +55,6 @@ public class Cliente {
 		if(dados.getNome() != null)
 			this.nome = dados.getNome();
 		
-		if(dados.getCpf() != null)
-			this.cpf = dados.getCpf();
-		
 		if(dados.getDataNascimento() != null)
 			this.dataNascimento = dados.getDataNascimento();
 		

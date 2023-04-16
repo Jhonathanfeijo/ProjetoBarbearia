@@ -21,6 +21,7 @@ import br.com.domain.model.Servico.ServicoDadosAtualizacao;
 import br.com.domain.model.Servico.ServicoDadosCadastro;
 import br.com.domain.model.Servico.ServicoInformacoes;
 import br.com.domain.model.Servico.ServicoRepository;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
@@ -30,6 +31,7 @@ public class ServicoController {
 	@Autowired
 	private ServicoRepository servicoRepository;
 
+	@Transactional
 	@PostMapping
 	public ResponseEntity cadastrarServico(@RequestBody @Valid ServicoDadosCadastro dados,
 			UriComponentsBuilder uriBuilder) {
@@ -39,6 +41,7 @@ public class ServicoController {
 		return ResponseEntity.created(uri).body(new ServicoInformacoes(servico));
 	}
 
+	@Transactional
 	@PutMapping
 	public ResponseEntity atualizarServico(@RequestBody ServicoDadosAtualizacao dadosServico) {
 
@@ -54,8 +57,8 @@ public class ServicoController {
 		return ResponseEntity.ok().body(new ServicoInformacoes(servico));
 	}
 
+	@Transactional
 	@DeleteMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity deletarServico(@PathVariable("id") Long id) {
 
 		Servico servico = servicoRepository.getReferenceById(id);
