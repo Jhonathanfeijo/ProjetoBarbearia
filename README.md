@@ -25,7 +25,7 @@ Pré-requisitos: Java 11
 git clone https://github.com/jhonathanfeijo/ProjetoBarbearia
 
 # entrar no SGBD
-Criar um schema chamado barbearia baseado no documento "Database-barbearia.sql" dentro do projeto
+Criar um schema chamado barbearia baseado no documento "Database-barbearia.sql" dentro no projeto
 
 # executar o projeto
 ./mvnw spring-boot:run
