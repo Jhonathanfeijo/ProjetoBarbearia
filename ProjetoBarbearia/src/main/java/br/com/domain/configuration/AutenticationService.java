@@ -1,4 +1,4 @@
-package br.com.domain.infra.configuration;
+package br.com.domain.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
