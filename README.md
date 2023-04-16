@@ -3,7 +3,7 @@
 
 # Sobre o projeto
 
-O projeto é uma aplicação back-end cujo objetivo é realizar agendamento e cancelamento de atendimentos, o CRUD de serviços, funcionários e clientes.
+O projeto é uma aplicação back-end cujo objetivo é realizar agendamento e cancelamento de atendimentos, CRUD de clientes, funcionários e serviços.
 
 
 # Tecnologias utilizadas
